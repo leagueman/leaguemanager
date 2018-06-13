@@ -1,14 +1,10 @@
 const express = require('express');
+const {publicArea, privateArea} = require('../auth/authorisation');
 const router = express.Router();
-
-const publicArea = (req,res,next) => next()
-const privateArea = (req,res,next) => next()
 
 const action = (req,res)=>{
     endpoint[req.method](req,res)
 }
-
-
 
 router.get('/:collection/:id', publicArea, action);
 router.post('/:collection/:id', privateArea, action);
@@ -19,7 +15,6 @@ router.delete('/:collection/:id', privateArea, action);
 router.get('/', publicArea, (req,res)=>{
     res.json({title:"League Manager"});
 });
-
 
 const endpoint = {
     GET: (req,res)=>{

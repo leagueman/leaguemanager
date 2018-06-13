@@ -1,15 +1,13 @@
 const express = require('express');
 const byID = require('./byID');
-const {getUsers} = require('../models/user');
+const {users} = require('../database/');
+const {publicArea, privateArea} = require('../auth/authorisation');
 const router = express.Router();
-
-const publicArea = (req,res,next) => next()
-const privateArea = (req,res,next) => next()
-
 
 router.use('/id', byID);
 
-router.get('/users', privateArea, getUsers)
+router.get('/users', privateArea, users.getUsers)
+router.get('/users/:id', privateArea, users.getUser)
 
 
 router.get('/', (req,res)=>{

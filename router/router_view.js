@@ -1,8 +1,6 @@
 const express = require('express');
+const {publicArea, privateArea} = require('../auth/authorisation');
 const router = express.Router();
-
-const publicArea = (req,res,next) => next()
-const privateArea = (req,res,next) => next()
 
 router.use('/', publicArea, (req,res)=>{
     res.send("Homepage")
