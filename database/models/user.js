@@ -15,11 +15,32 @@ const getUsers = (req,res)=>{
 }
 const getUser = (req,res)=>{
     User.findById(req.params.id)
-        .then(users=>res.send(users))
-        .catch(err=>res.send({error:true, message:"Error getting users"}))
+        .then(user=>res.send(user))
+        .catch(err=>res.send({error:true, message:"Error getting user"}))
+}
+
+const newUser = (req,res, next)=>{
+    res.redirect('/')
+    next()
+}
+
+const replaceUser = (req,res)=>{
+    res.redirect('/')
+}
+
+const updateUser = (req,res)=>{
+    res.redirect('/')
+}
+
+const deleteUser = (req,res)=>{
+    res.redirect('/')
 }
 
 module.exports = {
     getUsers,
-    getUser
+    getUser,
+    newUser,
+    replaceUser,
+    updateUser,
+    deleteUser
 }
