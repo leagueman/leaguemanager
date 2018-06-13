@@ -10,8 +10,8 @@ const User = mongoose.model('user', Schema);
 
 const getUsers = (req,res)=>{
     User.find({})
-        .then(users=>res.send(users))
-        .catch(err=>res.send({error:true, message:"Error getting users"}))
+        .then(users=>res.status(200).json(users))
+        .catch(err=>res.status(200).json({error:true, message:"Error getting users"}))
 }
 const getUser = (req,res)=>{
     User.findById(req.params.id)
@@ -20,8 +20,15 @@ const getUser = (req,res)=>{
 }
 
 const newUser = (req,res, next)=>{
-    res.redirect('/')
-    next()
+    var NEW_USER = new User({ name: req.body.name, email: req.body.email, password:req.body.password})
+        .save()
+        .then(result=>{
+            res.status(201).json(result);
+        })
+        .catch(err=>{
+            console.log(err)
+            res.status(400).json({error:err});
+        })    
 }
 
 const replaceUser = (req,res)=>{

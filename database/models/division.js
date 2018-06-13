@@ -12,7 +12,7 @@ const getDivisions = (req,res)=>{
     // Division.find({})
     //     .then(divisions=>res.send(divisions))
     //     .catch(err=>res.send({error:true, message:"Error getting divisions"}))
-    res.send({})
+    res.status(200).json({})
 }
 const getDivision = (req,res)=>{
     // Division.findById(req.params.id)
@@ -21,7 +21,7 @@ const getDivision = (req,res)=>{
     res.send({})
 }
 
-const newDivision = (req,res, next)=>{
+const newDivision = (req,res,next)=>{
     res.redirect('/')
     next()
 }
