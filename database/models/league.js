@@ -1,48 +1,11 @@
 const mongoose = require('../database');
+const {competition} = require('./')
 
 const Schema = new mongoose.Schema({
-    name: String,
-    email: String,
-    password: String,
+    title: String,
+    short_title: String,
+    competition: {type: mongoose.Schema.Types.ObjectId, ref: 'competition'},
+    divisions: [ {type: mongoose.Schema.Types.ObjectId, ref: 'division'} ]
 })
 
-const League = mongoose.model('league', Schema);
-
-const getLeagues = (req,res)=>{
-    // League.find({})
-    //     .then(leagues=>res.send(leagues))
-    //     .catch(err=>res.send({error:true, message:"Error getting leagues"}))
-    res.send({})
-}
-const getLeague = (req,res)=>{
-    // League.findById(req.params.id)
-    //     .then(league=>res.send(league))
-    //     .catch(err=>res.send({error:true, message:"Error getting league"}))
-    res.send({})
-}
-
-const newLeague = (req,res, next)=>{
-    res.redirect('/')
-    next()
-}
-
-const replaceLeague = (req,res)=>{
-    res.redirect('/')
-}
-
-const updateLeague = (req,res)=>{
-    res.redirect('/')
-}
-
-const deleteLeague = (req,res)=>{
-    res.redirect('/')
-}
-
-module.exports = {
-    getLeagues,
-    getLeague,
-    newLeague,
-    replaceLeague,
-    updateLeague,
-    deleteLeague
-}
+module.exports = mongoose.model('league', Schema);

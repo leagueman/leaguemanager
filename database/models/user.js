@@ -1,53 +1,17 @@
 const mongoose = require('../database');
 
+const { createToken } = require('../../auth/authorisation');
+
 const Schema = new mongoose.Schema({
-    name: String,
+    title: String,
     email: String,
     password: String,
+    jwt: String,
+    last_signed_in: Date,
+    is_admin: Boolean,
+    is_club_official: Boolean,
+    team:  {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
+    club:  {type: mongoose.Schema.Types.ObjectId, ref: 'club'},
 })
 
-const User = mongoose.model('user', Schema);
-
-const getUsers = (req,res)=>{
-    User.find({})
-        .then(users=>res.status(200).json(users))
-        .catch(err=>res.status(200).json({error:true, message:"Error getting users"}))
-}
-const getUser = (req,res)=>{
-    User.findById(req.params.id)
-        .then(user=>res.send(user))
-        .catch(err=>res.send({error:true, message:"Error getting user"}))
-}
-
-const newUser = (req,res, next)=>{
-    var NEW_USER = new User({ name: req.body.name, email: req.body.email, password:req.body.password})
-        .save()
-        .then(result=>{
-            res.status(201).json(result);
-        })
-        .catch(err=>{
-            console.log(err)
-            res.status(400).json({error:err});
-        })    
-}
-
-const replaceUser = (req,res)=>{
-    res.redirect('/')
-}
-
-const updateUser = (req,res)=>{
-    res.redirect('/')
-}
-
-const deleteUser = (req,res)=>{
-    res.redirect('/')
-}
-
-module.exports = {
-    getUsers,
-    getUser,
-    newUser,
-    replaceUser,
-    updateUser,
-    deleteUser
-}
+module.exports = mongoose.model('user', Schema);

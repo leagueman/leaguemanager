@@ -3,13 +3,16 @@ This just gathers all the models into one place, exposing each models methods in
 */
 
 module.exports = {
-    division: require('../database/models/division'),
-    fixture: require('../database/models/fixture'),
-    league: require('../database/models/league'),
-    organisation: require('../database/models/organisation'),
-    player: require('../database/models/player'),
-    referee: require('../database/models/referee'),
-    team: require('../database/models/team'),
-    user: require('../database/models/user'),
-    venue: require('../database/models/venue'),
+    Club: require('../database/models/club'),
+    Competition: require('../database/models/competition'),
+    Division: require('../database/models/division'),
+    Fixture: require('../database/models/fixture'),
+    League: require('../database/models/league'),
+    Organisation: require('../database/models/organisation'),
+    Player: require('../database/models/player'),
+    Referee: require('../database/models/referee'),
+    Score: require('../database/models/score'),
+    Team: require('../database/models/team'),
+    User: require('../database/models/user'),
+    Venue: require('../database/models/venue'),
 }

@@ -7,8 +7,14 @@ const fixture = require('./fixture');
 const referee = require('./referee');
 const venue = require('./venue');
 const user = require('./user');
+const score = require('./score');
+const club = require('./club');
+const competition = require('./competition');
 
 module.exports = {
+    club,
+    score, 
+    competition,
     organisation,
     league,
     division,
