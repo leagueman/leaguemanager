@@ -12,7 +12,7 @@ const createFixtureList = function(teams, {
     this is 3 rounds of matches or 6 rounds of matches
     */
 
-    let fixtures = [];
+    let fixtures = []; 
 
     let rounds = two_legs ? ((teams.length-1)*2) : teams.length-1;
     let groupA = [...teams];
