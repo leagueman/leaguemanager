@@ -4,6 +4,7 @@ const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
 const router = require('./router/');
 const logger = require('morgan');
+const {attachCORSHeaders} = require('./middleware/')
 
 const app = express()
 
@@ -12,6 +13,8 @@ app.use( favicon(`${__dirname}/public/favicon.ico`) );
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(attachCORSHeaders);
+
 app.use(router);
 
 
