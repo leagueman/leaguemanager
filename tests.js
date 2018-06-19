@@ -1,11 +1,20 @@
-const {createFixtureList} = require('./methods/fixtures')
+const {createFixtureList, createSchedule} = require('./methods/fixtures')
+const {randomize, isValidDate} = require('./methods/common')
+const moment = require('moment')
+
+
 module.exports = ()=>{
-    console.log("HI FROM TESTS")
+    console.log("CUSTOM TEST MODULE LOADED...")
 
     // Creating a fixture list
-    const teams = [{team:"aaa"}, {team:"bbb"}, {team:"ccc"}, {team:"ddd"}]
-    let fixtures = createFixtureList(teams).map(({home, away, round})=>{
-        console.log(home.team + " v " + away.team + " in round ", round)
-    })
+    const teams = [{team:"aaa"}, {team:"bbb"}, {team:"ccc"}, {team:"ddd"}, {team:"eee"}, {team:"fff"}]
+
+    let fixtures = createFixtureList(teams)
+    // console.log(fixtures)
+
+    let schedule = createSchedule(fixtures, "2018-07-25", "2018-10-08")
+    // console.log(schedule)    
+
     
+
 }
