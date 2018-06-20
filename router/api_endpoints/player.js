@@ -1,24 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {Player} = require('../../database/');
+const {player} = require('../../database/controllers/');
 
 const getPlayers = (req,res)=>{
-    // Player.find({})
-    //     .then(players=>res.send(players))
-    //     .catch(err=>res.send({error:true, message:"Error getting players"}))
-    res.send({})
+    res.redirect('/')
 }
 const getPlayer = (req,res)=>{
-    // Player.findById(req.params.id)
-    //     .then(player=>res.send(player))
-    //     .catch(err=>res.send({error:true, message:"Error getting player"}))
-    res.send({})
+    res.redirect('/')
 }
 
-const newPlayer = (req,res, next)=>{
+
+
+
+const newPlayer = (req,res)=>{
     res.redirect('/')
-    next()
 }
 
 const replacePlayer = (req,res)=>{

@@ -1,25 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {Team} = require('../../database/');
-
+const {team} = require('../../database/controllers/');
 
 const getTeams = (req,res)=>{
-    // Team.find({})
-    //     .then(teams=>res.send(teams))
-    //     .catch(err=>res.send({error:true, message:"Error getting teams"}))
-    res.send({})
+    team
+        .find()
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 const getTeam = (req,res)=>{
-    // Team.findById(req.params.id)
-    //     .then(team=>res.send(team))
-    //     .catch(err=>res.send({error:true, message:"Error getting team"}))
-    res.send({})
+    team
+        .findById(req.params.id)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
-const newTeam = (req,res, next)=>{
+
+const newTeam = (req,res)=>{
     res.redirect('/')
-    next()
 }
 
 const replaceTeam = (req,res)=>{

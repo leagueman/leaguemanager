@@ -1,24 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {Competition} = require('../../database/');
+const {competition} = require('../../database/controllers/');
 
 const getCompetitions = (req,res)=>{
-    Competition.find({})
-        .populate('league')
-        .then(templates=>res.send(templates))
-        .catch(err=>res.send({error:true, message:err}))
+    competition
+        .find({})
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 const getCompetition = (req,res)=>{
-    Competition.findById(req.params.id)
-        .populate({ path: 'league', populate: { path: 'divisions' } })
-        .then(template=>res.send(template))
-        .catch(err=>res.send({error:true, message:err}))
+    competition 
+        .findById(req.params.id)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
-const newCompetition = (req,res, next)=>{
+
+
+
+
+const newCompetition = (req,res)=>{
     res.redirect('/')
-    next()
 }
 
 const replaceCompetition = (req,res)=>{

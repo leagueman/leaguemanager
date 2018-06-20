@@ -1,24 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {Template} = require('../../database/');
+const {template} = require('../../database/contollers/');
 
 const getTemplates = (req,res)=>{
-    // Template.find({})
-    //     .then(templates=>res.send(templates))
-    //     .catch(err=>res.send({error:true, message:"Error getting templates"}))
-    res.send({})
+    res.redirect('/')
 }
 const getTemplate = (req,res)=>{
-    // Template.findById(req.params.id)
-    //     .then(template=>res.send(template))
-    //     .catch(err=>res.send({error:true, message:"Error getting template"}))
-    res.send({})
+    res.redirect('/')
 }
 
-const newTemplate = (req,res, next)=>{
+const newTemplate = (req,res)=>{
     res.redirect('/')
-    next()
 }
 
 const replaceTemplate = (req,res)=>{

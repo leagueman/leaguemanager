@@ -1,24 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {Referee} = require('../../database/');
+const {referee} = require('../../database/controllers/');
 
 const getReferees = (req,res)=>{
-    // Referee.find({})
-    //     .then(referees=>res.send(referees))
-    //     .catch(err=>res.send({error:true, message:"Error getting referees"}))
-    res.send({})
+    res.redirect('/')
 }
 const getReferee = (req,res)=>{
-    // Referee.findById(req.params.id)
-    //     .then(referee=>res.send(referee))
-    //     .catch(err=>res.send({error:true, message:"Error getting referee"}))
-    res.send({})
+    res.redirect('/')
 }
 
-const newReferee = (req,res, next)=>{
+
+
+
+const newReferee = (req,res)=>{
     res.redirect('/')
-    next()
 }
 
 const replaceReferee = (req,res)=>{

@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.use('/signin', publicArea, endpoints.signin)
 router.use('/register', publicArea, endpoints.register)
+router.use('/dashboard', privateArea, endpoints.dashboard)
 
 router.use('/', publicArea, (req,res)=>{
     res.sendFile(`${__dirname}/view_endpoints/views/index.html`)

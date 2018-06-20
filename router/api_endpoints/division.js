@@ -1,24 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {Division} = require('../../database/');
+const {division} = require('../../database/controllers/');
 
 const getDivisions = (req,res)=>{
-    Division.find({})
-        .populate('league')
-        .then(divisions=>res.send(divisions))
-        .catch(err=>res.send({error:true, message:err}))
+    division
+        .find()
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 const getDivision = (req,res)=>{
-    Division.findById(req.params.id)
-        .populate('league')
-        .then(division=>res.send(division))
-        .catch(err=>res.send({error:true, message:err}))
+    division 
+        .findById(req.params.id)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))   
 }
 
-const newDivision = (req,res,next)=>{
+
+
+
+
+
+const newDivision = (req,res)=>{
     res.redirect('/')
-    next()
 }
 
 const replaceDivision = (req,res)=>{

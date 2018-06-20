@@ -1,24 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {Fixture} = require('../../database/');
+const {fixture} = require('../../database/controllers/');
 
 const getFixtures = (req,res)=>{
-    // Fixture.find({})
-    //     .then(fixtures=>res.send(fixtures))
-    //     .catch(err=>res.send({error:true, message:"Error getting fixtures"}))
-    res.send({})
-}
-const getFixture = (req,res)=>{
-    // Fixture.findById(req.params.id)
-    //     .then(fixture=>res.send(fixture))
-    //     .catch(err=>res.send({error:true, message:"Error getting fixture"}))
-    res.send({})
+    res.redirect('/')
 }
 
-const newFixture = (req,res, next)=>{
+const getFixture = (req,res)=>{
     res.redirect('/')
-    next()
+}
+
+const newFixture = (req,res)=>{
+    res.redirect('/')
 }
 
 const replaceFixture = (req,res)=>{

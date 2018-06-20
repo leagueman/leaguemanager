@@ -1,24 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {Venue} = require('../../database/');
+const {venue} = require('../../database/controllers/');
 
 const getVenues = (req,res)=>{
-    // Venue.find({})
-    //     .then(venues=>res.send(venues))
-    //     .catch(err=>res.send({error:true, message:"Error getting venues"}))
-    res.send({})
+    res.redirect('/')
 }
 const getVenue = (req,res)=>{
-    // Venue.findById(req.params.id)
-    //     .then(venue=>res.send(venue))
-    //     .catch(err=>res.send({error:true, message:"Error getting venue"}))
-    res.send({})
+    res.redirect('/')
 }
 
-const newVenue = (req,res, next)=>{
+const newVenue = (req,res)=>{
     res.redirect('/')
-    next()
 }
 
 const replaceVenue = (req,res)=>{

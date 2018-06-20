@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const createToken = details=>(
     jwt.sign(
@@ -29,10 +30,11 @@ const publicArea = (req,res,next)=>{
 
 const privateArea = (req,res,next)=>{
     console.log("Private Area Accessed");
-    let token = req.method==='POST' ? req.body.token : req.query.token
+    let token = req.method==='POST' ? req.body.token : (req.query.token || req.headers['x-access-token'] || null)
     jwt.verify(token, process.env.SECRET_CODE, (err, decodedToken) =>{
-        if (err || !decodedToken) res.status(400).json({message: "Invalid auth token provided."})
+        if (err || !decodedToken) res.status(400).json({message: "Invalid authorisation token provided."})
         else{
+            console.log("decodedToken", decodedToken)
             req.user = decodedToken
             next()
         }

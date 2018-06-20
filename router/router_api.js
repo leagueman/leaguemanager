@@ -14,7 +14,7 @@ router.use('/player', publicArea, endpoints.player);
 router.use('/referee', publicArea, endpoints.referee);
 router.use('/score', publicArea, endpoints.score);
 router.use('/team', publicArea, endpoints.team);
-router.use('/user', privateArea, endpoints.user);
+router.use('/user', publicArea, endpoints.user);
 router.use('/venue', publicArea, endpoints.venue);
 
 router.get('/', (req,res)=>{

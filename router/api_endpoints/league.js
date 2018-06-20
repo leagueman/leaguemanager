@@ -1,27 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {League} = require('../../database/');
+const {league} = require('../../database/controllers/');
 
 
 const getLeagues = (req,res)=>{
-    League.find({})
-        .populate('divisions')
-        .then(leagues=>res.send(leagues))
-        .catch(err=>res.send({error:true, message:"Error getting leagues"}))
-    // res.send({})
+    league
+        .find()
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 const getLeague = (req,res)=>{
-    League.findById(req.params.id)
-        .populate('divisions')
-        .then(league=>res.send(league))
-        .catch(err=>res.send({error:true, message:err}))
-    // res.send({})
+    league 
+        .findById(req.params.id)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
-const newLeague = (req,res, next)=>{
+
+
+
+
+
+
+
+
+const newLeague = (req,res)=>{
     res.redirect('/')
-    next()
 }
 
 const replaceLeague = (req,res)=>{

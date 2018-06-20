@@ -1,7 +1,5 @@
 const mongoose = require('../database');
 
-const { createToken } = require('../../auth/authorisation');
-
 const Schema = new mongoose.Schema({
     title: String,
     email: String,
@@ -12,6 +10,7 @@ const Schema = new mongoose.Schema({
     is_club_official: Boolean,
     team:  {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
     club:  {type: mongoose.Schema.Types.ObjectId, ref: 'club'},
+    organisation:  {type: mongoose.Schema.Types.ObjectId, ref: 'organisation'},
 })
 
 module.exports = mongoose.model('user', Schema);

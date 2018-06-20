@@ -1,24 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {Organisation} = require('../../database/');
+const {organisation} = require('../../database/controllers/');
 
 const getOrganisations = (req,res)=>{
-    // Organisation.find({})
-    //     .then(organisations=>res.send(organisations))
-    //     .catch(err=>res.send({error:true, message:"Error getting organisations"}))
-    res.send({})
+    organisation
+        .find({})
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 const getOrganisation = (req,res)=>{
-    // Organisation.findById(req.params.id)
-    //     .then(organisation=>res.send(organisation))
-    //     .catch(err=>res.send({error:true, message:"Error getting organisation"}))
-    res.send({})
+    organisation 
+        .findById(req.params.id)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
-const newOrganisation = (req,res, next)=>{
+
+
+
+const newOrganisation = (req,res)=>{
     res.redirect('/')
-    next()
 }
 
 const replaceOrganisation = (req,res)=>{

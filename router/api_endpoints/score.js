@@ -1,24 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {Score} = require('../../database/');
+const {score} = require('../../database/controllers/');
 
 const getScores = (req,res)=>{
-    // Score.find({})
-    //     .then(templates=>res.send(templates))
-    //     .catch(err=>res.send({error:true, message:"Error getting templates"}))
-    res.send({})
+    res.redirect('/')
 }
 const getScore = (req,res)=>{
-    // Score.findById(req.params.id)
-    //     .then(template=>res.send(template))
-    //     .catch(err=>res.send({error:true, message:"Error getting template"}))
-    res.send({})
+    res.redirect('/')
 }
 
-const newScore = (req,res, next)=>{
+
+
+const newScore = (req,res)=>{
     res.redirect('/')
-    next()
 }
 
 const replaceScore = (req,res)=>{

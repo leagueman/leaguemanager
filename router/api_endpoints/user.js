@@ -1,59 +1,46 @@
 const express = require('express');
 const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
-const {User} = require('../../database/');
+const {user} = require('../../database/controllers/');
 
 
 const signin = (req,res)=>{
-    let {email, password} = req.body
-    User.findOne({email:email})
-        .then(user=>!user ? res.status(200).json({error:true, message:"Cannot find email"}) : user)
-        .then(user=>user.password===password ? user : null)
-        .then(user=>{
-            res.status(200).json({
-            success: true,
-            token: createToken({
-                sessionData: user,
-                maxAge: 3600
-              })
-            })
-            //TO-DO
-            //UPDATE last_signin
+    user
+        .signin(req.body)
+        // .then(data=>res.status(200).json(data))
+        .then(data=>{
+            if(data.is_admin) res.redirect('/dashboard/admin?token='+data.token)
+            if(data.is_club_official) res.redirect('/dashboard/club?token='+data.token)
         })
-        .catch(err=>res.status(200).json({error:true, message:"Error getting users"}))
+        .catch(err=>res.status(500).json({error:true, message:err}))
+
 }
 
 const signup = (req,res)=>{
-    let {email, password1, password2} = req.body
-    if(password1===password2){
-        req.body.passord = req.body.passord1
-        newUser(req,res)
-    }
-    else res.status(500).json({success:false, message:"Passwords didn't match"})
+    user    
+        .signup(req.body)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))
 }
 
 const getUsers = (req,res)=>{
-    User.find({})
+    user
+        .find({})
         .then(users=>res.status(200).json(users))
         .catch(err=>res.status(200).json({error:true, message:"Error getting users"}))
 }
 const getUser = (req,res)=>{
-    User.findById(req.params.id)
-        .then(user=>res.send(user))
-        .catch(err=>res.send({error:true, message:"Error getting user"}))
+    if(req.user.is_admin){
+        user
+            .findById(req.params.id)
+            .then(users=>res.status(200).json(users))
+            .catch(err=>res.status(200).json({error:true, message:"Error getting users"}))
+    }else{
+        res.status(200).json({error:true, message:"Not Authorised to view this data"})
+    }
 }
 
-const newUser = (req,res)=>{
-    var NEW_USER = new User({ name: req.body.name, email: req.body.email, password:req.body.password})
-        .save()
-        .then(result=>{
-            res.status(201).json(result);
-        })
-        .catch(err=>{
-            console.log(err)
-            res.status(400).json({error:err});
-        })    
-}
+
 
 const replaceUser = (req,res)=>{
     res.redirect('/')
@@ -69,9 +56,11 @@ const deleteUser = (req,res)=>{
 
 
 router.get('/', publicArea, getUsers);
-router.get('/:id', publicArea, getUser);
-router.post('/', privateArea, newUser);
-router.post('/signin', privateArea, signin);
+router.get('/:id', privateArea, getUser);
+router.post('/', publicArea, signup);
+router.post('/signin', publicArea, signin);
+
+//TO DO
 router.put('/:id', privateArea, replaceUser);
 router.patch('/:id', privateArea, updateUser);
 router.delete('/:id', privateArea, deleteUser);
