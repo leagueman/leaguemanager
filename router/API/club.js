@@ -5,27 +5,36 @@ const {club} = require('../../database/controllers/');
 
 const getClubs = (req,res)=>{
     club
-        .find()
+        .getClubs()
         .then(data=>res.status(200).json(data))
         .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 const getClub = (req,res)=>{
     club
-        .findById(req.params.id)
+        .getClub(req.params.id)
         .then(data=>res.status(200).json(data))
         .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
 const newClub = (req,res)=>{
-    res.redirect('/')
+    club
+        .newClub(req.body)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
 const replaceClub = (req,res)=>{
-    res.redirect('/')
+    club
+        .replaceClub(req.body._id, req.body)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))   
 }
 
 const updateClub = (req,res)=>{
-    res.redirect('/')
+    club
+        .updateClub(req.body._id, req.body)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))   
 }
 
 const deleteClub = (req,res)=>{
@@ -35,7 +44,7 @@ const deleteClub = (req,res)=>{
 
 router.get('/', publicArea, getClubs);
 router.get('/:id', publicArea, getClub);
-router.post('/', privateArea, newClub);
+router.post('/', publicArea, newClub);
 router.put('/:id', privateArea, replaceClub);
 router.patch('/:id', privateArea, updateClub);
 router.delete('/:id', privateArea, deleteClub);

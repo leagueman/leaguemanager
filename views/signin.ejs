@@ -7,8 +7,8 @@
     <title>Signin Mockup</title>
 </head>
 <body>
-    <a href="/api/user/signin">signin</a> | <a href="/register">Register</a>
-    <hr>
+    <% include partials/header %>
+
     <form method="POST" action="/api/user/signin">
         Email: <input type="email" name="email" id="email">
         Password: <input type="password" name="password" id="password">

@@ -2,7 +2,7 @@ const mongoose = require('../database');
 
 const Schema = new mongoose.Schema({
     title: String,
-    team_name_short: String,
+    title_short: String,
     primary_color: String,
     division:  {type: mongoose.Schema.Types.ObjectId, ref: 'division'},
     club: {type: mongoose.Schema.Types.ObjectId, ref: 'club'},

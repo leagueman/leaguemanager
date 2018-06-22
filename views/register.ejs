@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mock Register</title>
 </head>
-<body>    
-        <a href="/signin">signin</a> | <a href="/register">Register</a>
-        <hr>
+<body>   
+    <% include partials/header %>
+    
     <form method="POST" action="/api/user">
         Name: <input type="text" name="name" id="name"><br>
         Email: <input type="email" name="email" id="email"><br>

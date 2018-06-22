@@ -1,14 +1,15 @@
 const express = require('express');
-const endpoints = require('./view_endpoints/');
 const {publicArea, privateArea} = require('../auth/authorisation');
 const router = express.Router();
 
-router.use('/signin', publicArea, endpoints.signin)
-router.use('/register', publicArea, endpoints.register)
-router.use('/dashboard', privateArea, endpoints.dashboard)
+router.use('/signin', publicArea, require('./routes/signin') )
+router.use('/signout', publicArea, require('./routes/signout') )
+router.use('/register', publicArea, require('./routes/register'))
+router.use('/dashboard', privateArea, require('./routes/dashboard'))
+router.use('/myteam', privateArea, require('./routes/myteam'))
 
 router.use('/', publicArea, (req,res)=>{
-    res.sendFile(`${__dirname}/view_endpoints/views/index.html`)
+    res.render(`${__root}/views/index.ejs`, {user:req.user|| null})
 });
 
 module.exports = router;

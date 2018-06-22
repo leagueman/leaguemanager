@@ -17,8 +17,10 @@ module.exports = {
             })
             .then(data=>({
                 success: true,
+                is_admin: data.is_admin,
+                is_club_official: data.is_club_official,
                 token: createToken({
-                    sessionData: data,
+                    payload: data,
                     maxAge: 3600
                 })
             }))
@@ -46,23 +48,34 @@ module.exports = {
         }
     },
 
-    find: ()=>(
+    getUsers: ()=>(
         user
             .find({})
-            .then(data=>data)
+            .then(data=>{
+                // TO DO STRIP THE PASSWORD OFF EVERY USER IN DATA
+                return data
+            })
             .catch(err=>console.log({error:true, message:"Error getting divivions"}))
     ),
 
-    findById: (id)=>(
+    getUser: (id)=>(
         user
             .findById(id)
             .populate({ path: 'team' })
             .populate({ path: 'club' })
             .populate({ path: 'organisation' })
-            .then(data=>data)
+            .then(data=>{
+                data.password = ""
+                return data
+            })
             .catch(err=>console.log({error:true, message:err}))
     ),
     
-
+    getUsersByClub: (club)=>(
+        user
+            .find({club})
+            .then(data=>data)
+            .catch(err=>console.log({error:true, message:err}))
+    ),
     
 }

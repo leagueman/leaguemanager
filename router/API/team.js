@@ -5,20 +5,23 @@ const {team} = require('../../database/controllers/');
 
 const getTeams = (req,res)=>{
     team
-        .find()
+        .getTeams()
         .then(data=>res.status(200).json(data))
         .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 const getTeam = (req,res)=>{
     team
-        .findById(req.params.id)
+        .getTeam(req.params.id)
         .then(data=>res.status(200).json(data))
         .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
 
 const newTeam = (req,res)=>{
-    res.redirect('/')
+    team
+        .newTeam(req.body)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
 const replaceTeam = (req,res)=>{
@@ -36,9 +39,9 @@ const deleteTeam = (req,res)=>{
 
 router.get('/', publicArea, getTeams);
 router.get('/:id', publicArea, getTeam);
-router.post('/', privateArea, newTeam);
-router.put('/:id', privateArea, replaceTeam);
-router.patch('/:id', privateArea, updateTeam);
-router.delete('/:id', privateArea, deleteTeam);
+router.post('/', publicArea, newTeam);
+router.put('/:id', publicArea, replaceTeam);
+router.patch('/:id', publicArea, updateTeam);
+router.delete('/:id', publicArea, deleteTeam);
 
 module.exports = router;

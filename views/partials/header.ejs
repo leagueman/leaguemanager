@@ -1,0 +1,8 @@
+<a href="/">Home</a> |
+
+<% if (typeof user == 'object' && user && user.email) { %>
+    <%= user.email %> | <a href="/signout">Sign Out</a>
+    <% } else { %>
+        <a href="/signin">Sign In</a> | <a href="/register">Register</a>
+    <% } %>
+<hr>

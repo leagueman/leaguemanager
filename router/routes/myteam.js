@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const {publicArea, privateArea} = require('../../auth/authorisation');
+
+// const {user} = require('../../database/controllers/')
 
 router.get('/', (req, res)=>{
-    res.sendFile(`${__dirname}/views/signin.html`)
+    res.render(`${__root}/views/myteam`, {user:req.user|| null}) 
 });
 
 module.exports = router;
