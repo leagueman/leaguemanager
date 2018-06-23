@@ -1,4 +1,5 @@
 const mongoose = require('../database');
+const {ObjectId} = mongoose.Schema.Types
 
 const Scoreline = new mongoose.Schema({
     home_score: Number,
@@ -6,12 +7,12 @@ const Scoreline = new mongoose.Schema({
 })
 
 const Scorer = new mongoose.Schema({
-    player: {type: mongoose.Schema.Types.ObjectId, ref: 'player'},
+    player: {type: ObjectId, ref: 'player'},
     time: Number,
 })
 
 const Schema = new mongoose.Schema({
-    fixture: {type: mongoose.Schema.Types.ObjectId, ref: 'score'},
+    fixture: {type: ObjectId, ref: 'score'},
     referee_half_time: Scoreline,
     referee_full_time: Scoreline,
     referee_after_extra_time: Scoreline,

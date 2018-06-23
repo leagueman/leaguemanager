@@ -1,14 +1,16 @@
 const mongoose = require('../database');
+const {ObjectId} = mongoose.Schema.Types
 
 const Schema = new mongoose.Schema({
     title: String,
     title_short: String,
     primary_color: String,
-    division:  {type: mongoose.Schema.Types.ObjectId, ref: 'division'},
-    club: {type: mongoose.Schema.Types.ObjectId, ref: 'club'},
-    manager: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
-    players: [ {type: mongoose.Schema.Types.ObjectId, ref: 'player'} ],
-    users:  [ {type: mongoose.Schema.Types.ObjectId, ref: 'user'} ],
+    division:  {type: ObjectId, ref: 'division'},
+    club: {type: ObjectId, ref: 'club'},
+    manager: {type: ObjectId, ref: 'user'},
+    players: [ {type: ObjectId, ref: 'player'} ],
+    users:  [ {type: ObjectId, ref: 'user'} ],
+    fixtures:  [ {type: ObjectId, ref: 'fixture'} ],
 })
 
 module.exports = mongoose.model('team', Schema);

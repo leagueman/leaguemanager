@@ -2,10 +2,10 @@ const { venue } = require('../models/')
 
     
 module.exports = {
-    getVenues: ()=>(
+    getVenues: (criteria={})=>(
         venue
-            .find({})
-            .populate({ path: 'club' })
+            .find(criteria)
+            // .populate({ path: 'club' })
             .then(data=>data)
             .catch(err=>console.log({error:true, message:"Error getting venues"}))
     ),
@@ -13,16 +13,17 @@ module.exports = {
     getVenue: (id)=>(
         venue
             .findById(id)
-            .populate({ path: 'club' })
+            // .populate({ path: 'club' })
             .then(data=>data)
             .catch(err=>console.log({error:true, message:err}))
     ),
 
-    getVenuesByClub: (club)=>(
+    findVenue: (criteria={})=>(
         venue
-            .find({club})
+            .findOne(criteria)
+            // .populate({ path: 'club' })
             .then(data=>data)
-            .catch(err=>console.log({error:true, message:err}))
+            .catch(err=>console.log({error:true, message:"Error getting venues"}))
     ),
 
     newVenue: ({title, club, location})=>(

@@ -4,17 +4,28 @@ const {publicArea, privateArea} = require('../../auth/authorisation');
 const {referee} = require('../../database/controllers/');
 
 const getReferees = (req,res)=>{
-    res.redirect('/')
+    referee
+        .getReferees()
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
+
+
 const getReferee = (req,res)=>{
-    res.redirect('/')
+    referee
+        .getReferee(req.params.id)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
 
 
 
 const newReferee = (req,res)=>{
-    res.redirect('/')
+    referee
+        .newReferee(req.body)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
 const replaceReferee = (req,res)=>{
@@ -32,7 +43,7 @@ const deleteReferee = (req,res)=>{
 
 router.get('/', publicArea, getReferees);
 router.get('/:id', publicArea, getReferee);
-router.post('/', privateArea, newReferee);
+router.post('/', publicArea, newReferee);
 router.put('/:id', privateArea, replaceReferee);
 router.patch('/:id', privateArea, updateReferee);
 router.delete('/:id', privateArea, deleteReferee);

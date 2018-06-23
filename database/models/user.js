@@ -1,4 +1,5 @@
 const mongoose = require('../database');
+const {ObjectId} = mongoose.Schema.Types
 
 const Schema = new mongoose.Schema({
     title: String,
@@ -8,9 +9,9 @@ const Schema = new mongoose.Schema({
     last_signed_in: Date,
     is_admin: Boolean,
     is_club_official: Boolean,
-    team:  {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
-    club:  {type: mongoose.Schema.Types.ObjectId, ref: 'club'},
-    organisation:  {type: mongoose.Schema.Types.ObjectId, ref: 'organisation'},
+    team:  {type: ObjectId, ref: 'team'},
+    club:  {type: ObjectId, ref: 'club'},
+    organisation:  {type: ObjectId, ref: 'organisation'},
 })
 
 module.exports = mongoose.model('user', Schema);

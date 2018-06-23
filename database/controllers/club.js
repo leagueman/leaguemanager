@@ -1,11 +1,17 @@
 const { club } = require('../models/')
 const team = require('./team')
 const venue = require('./venue')
-    
+
+const aggregate = async data=>{
+    data.teams = await team.getTeams({club:data._id})
+    data.venues = await venue.getVenues({club:data._id})
+    return data
+}
+
 module.exports = {
-    getClubs: ()=>(
+    getClubs: (criteria={})=>(
         club
-            .find({})
+            .find(criteria)
             .populate({ path: 'organisation' })
             .then(data=>data)
             .catch(err=>console.log({error:true, message:"Error getting clubs"}))
@@ -15,21 +21,17 @@ module.exports = {
         club
             .findById(id)
             .populate({ path: 'organisation' })
-            .then(async data=>{
-                data.teams = await team.getTeamsByClub(data._id)
-                data.venues = await venue.getVenuesByClub(data._id)
-                return data
-            })
+            .then(aggregate)
             .catch(err=>console.log({error:true, message:err}))
     ),
     
-    getClubsByOrganisation: (organisation)=>(
+    findClub: (criteria={})=>(
         club
-            .find({organisation})
-            .then(data=>data)
-            .catch(err=>console.log({error:true, message:"Error getting clubs"}))
+            .findOne(criteria)
+            .populate({ path: 'organisation' })
+            .then(aggregate)
+            .catch(err=>console.log({error:true, message:err}))
     ),
-
 
 
     // TRYING ASYNC/AWAIT AND PROMISES TO SEE WHICH WORKS
@@ -65,33 +67,3 @@ module.exports = {
 
 
 }
-
-
-
-
-
-
-// UPDATE METHODS
-       
-// METHOD 1
-            // OBJECT RETRIEVED MODIFIED AND SAVED
-            // Tank.findById(id, function (err, tank) {
-            //     if (err) return handleError(err);
-              
-            //     tank.size = 'large';
-            //     tank.save(function (err, updatedTank) {
-            //       if (err) return handleError(err);
-            //       res.send(updatedTank);
-            //     });
-            //   });
-
-// METHOD 2
-            //NO OBJECT RETURNED
-            // Tank.update({ _id: id }, { $set: { size: 'large' }}, callback);
-
-// METHOD 3
-            // IF WE NEED OBJECT - CREATES A NEW OBJECT WITH FLAG
-            // Tank.findByIdAndUpdate(id, { $set: { size: 'large' }}, { new: true }, function (err, tank) {
-            //     if (err) return handleError(err);
-            //     res.send(tank);
-            //   });

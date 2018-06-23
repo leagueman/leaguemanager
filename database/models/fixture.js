@@ -1,16 +1,18 @@
 const mongoose = require('../database');
+const {ObjectId} = mongoose.Schema.Types
 
 const Schema = new mongoose.Schema({
-    time: String,
+    date: Date,
     status: String,
-    venue: {type: mongoose.Schema.Types.ObjectId, ref: 'venue'},
-    competition: {type: mongoose.Schema.Types.ObjectId, ref: 'competition'},
-    division: {type: mongoose.Schema.Types.ObjectId, ref: 'division'},
-    referee: {type: mongoose.Schema.Types.ObjectId, ref: 'referee'},
-    home_team: {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
-    away_team: {type: mongoose.Schema.Types.ObjectId, ref: 'team'},
-    other_leg_fixture: {type: mongoose.Schema.Types.ObjectId, ref: 'fixture'},
-    score: {type: mongoose.Schema.Types.ObjectId, ref: 'score'},
+    venue: {type: ObjectId, ref: 'venue'},
+    competition: {type: ObjectId, ref: 'competition'},
+    division: {type: ObjectId, ref: 'division'},
+    referee: {type: ObjectId, ref: 'referee'},
+    home_team: {type: ObjectId, ref: 'team'},
+    away_team: {type: ObjectId, ref: 'team'},
+    other_leg_fixture: {type: ObjectId, ref: 'fixture'},
+    score: {type: ObjectId, ref: 'score'},
+    time_slot: {type: ObjectId, ref: 'time_slot'},
 })
 
 module.exports = mongoose.model('fixture', Schema);

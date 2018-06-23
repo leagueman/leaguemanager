@@ -4,11 +4,17 @@ const {publicArea, privateArea} = require('../../auth/authorisation');
 const {fixture} = require('../../database/controllers/');
 
 const getFixtures = (req,res)=>{
-    res.redirect('/')
-}
+    fixture
+        .getFixtures()
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))
+}   
 
 const getFixture = (req,res)=>{
-    res.redirect('/')
+    fixture
+        .getFixture(req.params.id)
+        .then(data=>res.status(200).json(data))
+        .catch(err=>res.status(500).json({error:true, message:err}))
 }
 
 const newFixture = (req,res)=>{

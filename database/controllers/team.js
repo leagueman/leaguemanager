@@ -2,10 +2,10 @@ const { team } = require('../models/')
 
     
 module.exports = {
-    getTeams: ()=>(
+    getTeams: (criteria={})=>(
         team
-            .find({})
-            .populate({ path: 'division' })
+            .find(criteria)
+            // .populate({ path: 'division' })
             .populate({ path: 'club' })
             .then(data=>data)
             .catch(err=>console.log({error:true, message:"Error getting teams"}))
@@ -14,21 +14,23 @@ module.exports = {
     getTeam: (id)=>(
         team
             .findById(id)
+            .populate({ path: 'club' })
+            .populate({ path: 'division' })
+            .then(data=>data)
+            .catch(err=>console.log({error:true, message:err}))
+    ),
+
+    findTeam: (criteria={})=>(
+        team
+            .findOne(criteria)
             .populate({ path: 'division' })
             .populate({ path: 'club' })
             .then(data=>data)
-            .catch(err=>console.log({error:true, message:err}))
-    ),
-
-    getTeamsByClub: (club)=>(
-        team
-            .find({club})
-            .then(data=>data)
-            .catch(err=>console.log({error:true, message:err}))
+            .catch(err=>console.log({error:true, message:"Error getting teams"}))
     ),
 
     newTeam: ({title, club, title_short, primary_color, manager})=>(
-        //CHECK IF USER IS ADMIN
+        //CHECK IF USER IS ADMIN - should be done at api as middleware
         new team({
                     title, 
                     club,
@@ -40,4 +42,14 @@ module.exports = {
                 .then(result=>result)
                 .catch(err=>console.log({error:true, message:"Error creating team"}))
     ),
+
+    // getTeamFixtures: (id)=>(
+    //     team
+    //         .findById(id)
+    //         .then(async data=>{
+    //             // data.fixtures = await fixture.getFixtures({$or:{home_team_id:id, away_team_id:id}}) //I THINK THATS RIGHT
+    //             return data
+    //         })
+    //         .catch(err=>console.log({error:true, message:err}))
+    // ),
 }

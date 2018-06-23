@@ -5,13 +5,13 @@ const {division} = require('../../database/controllers/');
 
 const getDivisions = (req,res)=>{
     division
-        .find()
+        .getDivisions()
         .then(data=>res.status(200).json(data))
         .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 const getDivision = (req,res)=>{
     division 
-        .findById(req.params.id)
+        .getDivision(req.params.id)
         .then(data=>res.status(200).json(data))
         .catch(err=>res.status(500).json({error:true, message:err}))   
 }

@@ -6,13 +6,13 @@ const {league} = require('../../database/controllers/');
 
 const getLeagues = (req,res)=>{
     league
-        .find()
+        .getLeagues()
         .then(data=>res.status(200).json(data))
         .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 const getLeague = (req,res)=>{
     league 
-        .findById(req.params.id)
+        .getLeague(req.params.id)
         .then(data=>res.status(200).json(data))
         .catch(err=>res.status(500).json({error:true, message:err}))    
 }

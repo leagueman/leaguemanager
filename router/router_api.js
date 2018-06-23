@@ -17,7 +17,7 @@ router.use('/user', publicArea, require('./API/user'));
 router.use('/venue', publicArea, require('./API/venue'));
 
 router.use('/', (req,res)=>{
-    res.json({title:"League Manager"});
+     res.json({title:"League Manager"});
 });
 
 module.exports = router;

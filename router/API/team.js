@@ -16,6 +16,13 @@ const getTeam = (req,res)=>{
         .catch(err=>res.status(500).json({error:true, message:err}))    
 }
 
+// const getTeamFixtures = (req,res)=>{
+//     team
+//         .getTeamFixtures(req.params.id)
+//         .then(data=>res.status(200).json(data))
+//         .catch(err=>res.status(500).json({error:true, message:err}))    
+// }
+
 
 const newTeam = (req,res)=>{
     team
@@ -37,8 +44,10 @@ const deleteTeam = (req,res)=>{
 }
 
 
+
 router.get('/', publicArea, getTeams);
 router.get('/:id', publicArea, getTeam);
+// router.get('/:id/fixtures', publicArea, getTeamFixtures);
 router.post('/', publicArea, newTeam);
 router.put('/:id', publicArea, replaceTeam);
 router.patch('/:id', publicArea, updateTeam);

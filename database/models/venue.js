@@ -1,4 +1,5 @@
 const mongoose = require('../database');
+const {ObjectId} = mongoose.Schema.Types
 
 const Schema = new mongoose.Schema({
     title: String,
@@ -6,7 +7,7 @@ const Schema = new mongoose.Schema({
         longitude: String,
         latitude: String
     },
-    club: {type: mongoose.Schema.Types.ObjectId, ref: 'club'},
+    club: {type: ObjectId, ref: 'club'},
 })
 
 module.exports = mongoose.model('venue', Schema);

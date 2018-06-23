@@ -1,29 +1,40 @@
 const { organisation } = require('../models/')
 const club = require('./club')
+const competition = require('./competition')
+const referee = require('./referee')
+
+const aggregate = async data=>{
+    data.clubs = await club.getClubs({organisation:data._id})
+    data.competitions = await competition.getCompetitions({organisation:data._id})
+    data.referees = await referee.getReferees({organisation:data._id})
+    return data
+}
 
 module.exports = {
-    getOrganisations: ()=>(
+    getOrganisations: (criteria={})=>(
         organisation
-            .find({})
-            .populate({ path: 'clubs', select:'title' })
+            .find(criteria)
             .then(data=>data)
             .catch(err=>console.log({error:true, message:"Error getting organisations"}))
     ),
 
-    getOrganisation: (id)=>{       
-        return organisation
+    getOrganisation: (id)=>(      
+        organisation
             .findById(id)
-            .then(async data=>{
-                data.clubs = await club.getClubsByOrganisation(data._id)
-                return data
-            })
+            .then(aggregate)
             .catch(err=>{
                 console.log({error:true, message:err})
             })
-        },
+        ),
+
+    findOrganisation: (criteria={})=>(
+        organisation
+            .findOne(criteria)
+            .then(aggregate)
+            .catch(err=>console.log({error:true, message:"Error getting organisations"}))
+    ),
 
     newOrganisation: async ({title})=>(
-        //CHECK IF USER IS ADMIN
         new organisation({
                     title, 
                 })

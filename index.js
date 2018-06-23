@@ -22,6 +22,8 @@ app.use(cookieParser());
 app.use(attachCORSHeaders);
 
 global.__root   = __dirname + ''; 
+global.__models   = __dirname + '/database/models/'; 
+global.__controllers   = __dirname + '/database/controllers/'; 
 
 app.use(router);
 

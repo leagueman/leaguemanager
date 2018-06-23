@@ -48,11 +48,11 @@ module.exports = {
         }
     },
 
-    getUsers: ()=>(
+    getUsers: (criteria={})=>(
         user
-            .find({})
+            .find(criteria)
             .then(data=>{
-                // TO DO STRIP THE PASSWORD OFF EVERY USER IN DATA
+                // TO-DO STRIP THE PASSWORD OFF EVERY USER IN DATA
                 return data
             })
             .catch(err=>console.log({error:true, message:"Error getting divivions"}))
