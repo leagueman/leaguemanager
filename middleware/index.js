@@ -1,5 +1,4 @@
-const attachCORSHeaders = require("./attachCORSHeaders")
 
 module.exports = {
-    attachCORSHeaders
+    attachCORSHeaders : require("./attachCORSHeaders"),
 }

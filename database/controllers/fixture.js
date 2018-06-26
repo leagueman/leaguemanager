@@ -1,12 +1,24 @@
 const { fixture } = require('../models/')
-const team = require('./team')
+const table = require('./table')
 const venue = require('./venue')
+
+const {createTable} = require('../../methods/table')
 
 const aggregate = async data=>{
     // data.home_team = await team.getTeam(data.home_team)
     // data.away_team = await team.getTeam(data.away_team)
     // data.venues = await venue.getVenues({fixture:data._id})
     return data
+}
+
+// TO-DO this is triggered when you update a fixture, it should trigger when you update a score
+const siblings = async data=>{
+    let fixtures = await module.exports.getFixtures({division:data.division})
+    let table = createTable(fixtures)
+    table
+        .updateTable(data.division, table)
+        .then(data=>data)
+        .catch(err=>console.log({error:true, message:"Error updating table"}))
 }
 
 
@@ -44,15 +56,11 @@ module.exports = {
             .catch(err=>console.log({error:true, message:err}))
     ),
 
-
-
-
     updateFixture: async (id, data)=>{
-        let Fixture = await fixture
+        fixture
             .findByIdAndUpdate(id, { $set: data}, { new: false })
-        
-        if(!Fixture) return {error:true, message:"Couldn't update fixture"}
-        else return Fixture
+            .then(siblings)
+            .catch(err=>console.log({error:true, message:err}))
     },
 
     replaceFixture: async (data)=>{        

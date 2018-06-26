@@ -10,7 +10,7 @@ const {attachCORSHeaders} = require('./middleware/')
 
 const app = express()
 
-app.set('views', path.join(__dirname, 'router', 'view_endpoints', 'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use( express.static(`${__dirname}/public`) );
@@ -22,16 +22,25 @@ app.use(cookieParser());
 app.use(attachCORSHeaders);
 
 global.__root   = __dirname + ''; 
-global.__models   = __dirname + '/database/models/'; 
-global.__controllers   = __dirname + '/database/controllers/'; 
+// global.__models   = __dirname + '/database/models/'; 
+// global.__controllers   = __dirname + '/database/controllers/'; 
 
 app.use(router);
+
+//THIS IS A GENERIC ERROR HANDLING MIDDLEWARE
+//THIS NEEDS TO BE REDONE
+app.use(function (err, req, res, next) {
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
+})
 
 
 let port = process.env.PORT || 9000
 app.listen(port, ()=>{
     console.log("Server started on port " + port);
     require('./tests')();
+    console.log(app.get('views'))
+
 });
 
 module.exports = app

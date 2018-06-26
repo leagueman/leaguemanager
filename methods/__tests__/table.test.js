@@ -1,4 +1,4 @@
-const {updateLeagueTable} = require('../table.js')
+const {createTable} = require('../table.js')
 
 describe('correct table gets returned', ()=>{
     
@@ -21,7 +21,7 @@ describe('correct table gets returned', ()=>{
         ]
 
     test('returns a correct league table', ()=>{
-        expect(updateLeagueTable(fixtures)).toEqual(
+        expect(createTable(fixtures)).toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
                     team: 'xxx',p: 2,w: 1,d: 1,l: 0,f: 6,a: 4,gd: 2,pts: 4,hp: 1,ap: 1,hw: 0,aw: 1,hd: 1,ad: 0,hl: 0,al: 0,hf: 3,af: 3,ha: 3,aa: 1,hgd: 0,agd: 2,hpts: 1,apts: 3,form: '13',hform: '1',aform: '3' 
@@ -34,7 +34,7 @@ describe('correct table gets returned', ()=>{
     })
 
     test('returns a correct league table', ()=>{
-        expect(updateLeagueTable(fixturesBroken)).toEqual(
+        expect(createTable(fixturesBroken)).toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
                     team: 'xxx',p:1,w:1,d:0,l:0,f:3,a:1,gd:2,pts:3,hp:0,ap:1,hw:0,aw:1,hd:0,ad:0,hl:0,al:0,hf:0,af:3,ha:0,aa:1,hgd:0,agd:2,hpts:0,apts:3,form:'3',hform:'',aform:'3' 

@@ -4,7 +4,7 @@ const {publicArea, privateArea} = require('../../auth/authorisation');
 const {user} = require('../../database/controllers/');
 
 
-const signin = (req,res)=>{
+const signin = (req, res, next)=>{
     user
         .signin(req.body)
         // .then(data=>res.status(200).json(data))
@@ -21,58 +21,66 @@ const signin = (req,res)=>{
                 // res.redirect('/myteam?token='+data.token)
             }
         })
-        .catch(err=>res.status(500).json({error:true, message:err}))
+        .catch(next)
 
 }
 
-const signup = (req,res)=>{
+const signup = (req, res, next)=>{
     user    
         .signup(req.body)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))
+        .catch(next)
 }
 
-const getUsers = (req,res)=>{
+const getUsers = (req, res, next)=>{
+
+    //THIS LOGIC SHOULD BE HANDLED BY A MIDDLEWARE
     if(req.user && req.user.is_admin){
         user
             .find({})
             .then(users=>res.status(200).json(users))
-            .catch(err=>res.status(200).json({error:true, message:"Error getting users"}))
+            .catch(next)
     }else{
         res.status(200).json({error:true, message:"Not Authorised to view this data"})
     }
 }
-const getUser = (req,res)=>{
+const getUser = (req, res, next)=>{
         user
             .getUser(req.params.id)
             .then(users=>res.status(200).json(users))
-            .catch(err=>res.status(200).json({error:true, message:"Error getting user"}))
+            .catch(next)
 }
 
-const updateUser = (req,res)=>{
+const updateUser = (req, res, next)=>{
     console.log(req.query)
     user
         .updateUser(req.user._id, req.body)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))   
+        .catch(next)   
 }
 
 
-const replaceUser = (req,res)=>{
+const replaceUser = (req, res, next)=>{
     res.redirect('/')
 }
 
 
-const deleteUser = (req,res)=>{
+const deleteUser = (req, res, next)=>{
     res.redirect('/')
 }
 
-const setTeam = (req,res)=>{
+const setTeam = (req, res, next)=>{
     user
         .updateUser(req.user._id, {team:req.query.team})
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))   
+        .catch(next)   
 }
+
+
+router.use((req,res,next)=>{
+    console.log("User route middleware stub")
+    next()
+})
 
 router.get('/', privateArea, getUsers);
 router.get('/:id', privateArea, getUser);

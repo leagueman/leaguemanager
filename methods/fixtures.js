@@ -24,7 +24,7 @@ const createFixtureList = function(teams, {
         for (let j = 0; j < groupA.length; j++) {
             let home = i%2 ? groupA[j] : groupB[j];
             let away = i%2 ? groupB[j] : groupA[j]; 
-            fixtures.push({home: home, away:away, round:i});
+            fixtures.push({home_team: home, away_team:away, round:i});
         }
         groupB.push(groupA.pop()); 
         groupA.splice( (teams.length%2 ? 0 : 1) , 0, groupB.shift());
@@ -64,7 +64,8 @@ const createSchedule = (
     const matchday = time_units==="weeks" ? season_start.day() : 0
    
     // create blank schedule
-    const schedule = []
+    // const schedule = []
+    const schedule = {}
     // loop through the rounds
     for(let i=0; i<num_rounds; i++){
 
@@ -77,7 +78,8 @@ const createSchedule = (
             .add(matchday, 'days')                                  // then forward to the matchday
             //COULD MAYBE CHECK THE DATE HERE AGAINST BLACKLISTED DATES, LIKE XMAS
         
-        schedule.push({round:(i+1), scheduled_date:fixture_date});  // push fixture date for this round on to schedule object. (i+1) because i has to be 0 for first day
+        // schedule.push({round:(i+1), scheduled_date:fixture_date});  // push fixture date for this round on to schedule object. (i+1) because i has to be 0 for first day
+        schedule['round_'+(i+1)] = fixture_date
     }   
     
     // This just gets all potential dates (including used) on that matchday
@@ -95,9 +97,6 @@ const createSchedule = (
     }
     return {schedule, all_dates}
 }
-
-
-
 
 module.exports = {
     createFixtureList,

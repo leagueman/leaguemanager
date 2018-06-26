@@ -5,7 +5,8 @@ const TableSchema = new mongoose.Schema({
     team: {type: ObjectId, ref: 'team'},
 })
 const Schema = new mongoose.Schema({
-    table: [TableSchema],
+    table: Array,
+    // table: [TableSchema],
     division:  {type: ObjectId, ref: 'division'},
 })
 

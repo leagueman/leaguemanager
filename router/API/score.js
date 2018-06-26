@@ -3,31 +3,35 @@ const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
 const {score} = require('../../database/controllers/');
 
-const getScores = (req,res)=>{
+const getScores = (req, res, next)=>{
     res.redirect('/')
 }
-const getScore = (req,res)=>{
-    res.redirect('/')
-}
-
-
-
-const newScore = (req,res)=>{
+const getScore = (req, res, next)=>{
     res.redirect('/')
 }
 
-const replaceScore = (req,res)=>{
+
+
+const newScore = (req, res, next)=>{
     res.redirect('/')
 }
 
-const updateScore = (req,res)=>{
+const replaceScore = (req, res, next)=>{
     res.redirect('/')
 }
 
-const deleteScore = (req,res)=>{
+const updateScore = (req, res, next)=>{
     res.redirect('/')
 }
 
+const deleteScore = (req, res, next)=>{
+    res.redirect('/')
+}
+
+router.use((req,res,next)=>{
+    console.log("Score route middleware stub")
+    next()
+})
 
 router.get('/', publicArea, getScores);
 router.get('/:id', publicArea, getScore);

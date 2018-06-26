@@ -4,17 +4,17 @@ const {publicArea, privateArea} = require('../../auth/authorisation');
 const {league} = require('../../database/controllers/');
 
 
-const getLeagues = (req,res)=>{
+const getLeagues = (req, res, next)=>{
     league
         .getLeagues()
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
-const getLeague = (req,res)=>{
+const getLeague = (req, res, next)=>{
     league 
         .getLeague(req.params.id)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
 
@@ -25,22 +25,26 @@ const getLeague = (req,res)=>{
 
 
 
-const newLeague = (req,res)=>{
+const newLeague = (req, res, next)=>{
     res.redirect('/')
 }
 
-const replaceLeague = (req,res)=>{
+const replaceLeague = (req, res, next)=>{
     res.redirect('/')
 }
 
-const updateLeague = (req,res)=>{
+const updateLeague = (req, res, next)=>{
     res.redirect('/')
 }
 
-const deleteLeague = (req,res)=>{
+const deleteLeague = (req, res, next)=>{
     res.redirect('/')
 }
 
+router.use((req, res, next)=>{
+    console.log("League route middleware stub")
+    next()
+})
 
 router.get('/', publicArea, getLeagues);
 router.get('/:id', publicArea, getLeague);

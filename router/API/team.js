@@ -3,47 +3,51 @@ const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
 const {team} = require('../../database/controllers/');
 
-const getTeams = (req,res)=>{
+const getTeams = (req, res, next)=>{
     team
         .getTeams()
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
-const getTeam = (req,res)=>{
+const getTeam = (req, res, next)=>{
     team
         .getTeam(req.params.id)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-// const getTeamFixtures = (req,res)=>{
+// const getTeamFixtures = (req, res, next)=>{
 //     team
 //         .getTeamFixtures(req.params.id)
 //         .then(data=>res.status(200).json(data))
-//         .catch(err=>res.status(500).json({error:true, message:err}))    
+//         .catch(next)    
 // }
 
 
-const newTeam = (req,res)=>{
+const newTeam = (req, res, next)=>{
     team
         .newTeam(req.body)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const replaceTeam = (req,res)=>{
+const replaceTeam = (req, res, next)=>{
     res.redirect('/')
 }
 
-const updateTeam = (req,res)=>{
+const updateTeam = (req, res, next)=>{
     res.redirect('/')
 }
 
-const deleteTeam = (req,res)=>{
+const deleteTeam = (req, res, next)=>{
     res.redirect('/')
 }
 
 
+router.use((req,res,next)=>{
+    console.log("Team route middleware stub")
+    next()
+})
 
 router.get('/', publicArea, getTeams);
 router.get('/:id', publicArea, getTeam);

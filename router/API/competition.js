@@ -3,22 +3,22 @@ const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
 const {competition, league, division} = require('../../database/controllers/');
 
-const getCompetitions = (req,res)=>{
+const getCompetitions = (req, res, next)=>{
     competition
         .getCompetitions({})
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const getCompetition = (req,res)=>{
+const getCompetition = (req, res, next)=>{
     competition 
         .getCompetition(req.params.id)
         .then(data=> res.status(200).json(data) )
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
 // TO-DO - MOVE THIS LOGIC TO THE CONTROLLER 
-const newCompetition = (req,res)=>{
+const newCompetition = (req, res, next)=>{
     competition
         .newCompetition(req.body)
         .then(new_competition=>{
@@ -53,21 +53,25 @@ const newCompetition = (req,res)=>{
             }
             
         })
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const replaceCompetition = (req,res)=>{
+const replaceCompetition = (req, res, next)=>{
     res.redirect('/')
 }
 
-const updateCompetition = (req,res)=>{
+const updateCompetition = (req, res, next)=>{
     res.redirect('/')
 }
 
-const deleteCompetition = (req,res)=>{
+const deleteCompetition = (req, res, next)=>{
     res.redirect('/')
 }
 
+router.use((req, res, next)=>{
+    console.log("Competition route middleware stub")
+    next()
+})
 
 router.get('/', publicArea, getCompetitions);
 router.get('/:id', publicArea, getCompetition);

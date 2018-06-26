@@ -3,39 +3,43 @@ const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
 const {organisation} = require('../../database/controllers/');
 
-const getOrganisations = (req,res)=>{
+const getOrganisations = (req, res, next)=>{
     organisation
         .getOrganisations({})
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const getOrganisation = (req,res)=>{
+const getOrganisation = (req, res, next)=>{
     organisation 
         .getOrganisation(req.params.id)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const newOrganisation = (req,res)=>{
+const newOrganisation = (req, res, next)=>{
     organisation
         .newOrganisation(req.body)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const replaceOrganisation = (req,res)=>{
+const replaceOrganisation = (req, res, next)=>{
     res.redirect('/')
 }
 
-const updateOrganisation = (req,res)=>{
+const updateOrganisation = (req, res, next)=>{
     res.redirect('/')
 }
 
-const deleteOrganisation = (req,res)=>{
+const deleteOrganisation = (req, res, next)=>{
     res.redirect('/')
 }
 
+router.use((req, res, next)=>{
+    console.log("Organisation route middleware stub")
+    next()
+})
 
 router.get('/', publicArea, getOrganisations);
 router.get('/:id', publicArea, getOrganisation);

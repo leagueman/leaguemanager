@@ -3,37 +3,42 @@ const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
 const {venue} = require('../../database/controllers/');
 
-const getVenues = (req,res)=>{
+const getVenues = (req, res, next)=>{
     venue
         .getVenues()
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
-const getVenue = (req,res)=>{
+const getVenue = (req, res, next)=>{
     venue
         .getVenue(req.params.id)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const newVenue = (req,res)=>{
+const newVenue = (req, res, next)=>{
     venue
         .newVenue(req.body)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const replaceVenue = (req,res)=>{
+const replaceVenue = (req, res, next)=>{
     res.redirect('/')
 }
 
-const updateVenue = (req,res)=>{
+const updateVenue = (req, res, next)=>{
     res.redirect('/')
 }
 
-const deleteVenue = (req,res)=>{
+const deleteVenue = (req, res, next)=>{
     res.redirect('/')
 }
+
+router.use((req,res,next)=>{
+    console.log("Venue route middleware stub")
+    next()
+})
 
 router.get('/', publicArea, getVenues);
 router.get('/:id', publicArea, getVenue);

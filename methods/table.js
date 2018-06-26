@@ -1,7 +1,7 @@
 const methods = {
 
     // accepts an array of fixtures each containing a score
-    updateLeagueTable : (fixtures)=>{
+    createTable : (fixtures)=>{
         
         let teamObj = {}
         fixtures.forEach(fixture => {

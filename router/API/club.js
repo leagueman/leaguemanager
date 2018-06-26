@@ -3,51 +3,55 @@ const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
 const {club, user, team} = require('../../database/controllers');
 
-const getClubs = (req,res)=>{
+const getClubs = (req, res, next)=>{
     club
         .getClubs()
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
-const getClub = (req,res)=>{
+const getClub = (req, res, next)=>{
     club
         .getClub(req.params.id)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const getClubOfficials = (req,res)=>{
+const getClubOfficials = (req, res, next)=>{
     user
         .getUsers({club:req.params.id, is_club_official:true})
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const newClub = (req,res)=>{
+const newClub = (req, res, next)=>{
     club
         .newClub(req.body)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))    
+        .catch(next)    
 }
 
-const replaceClub = (req,res)=>{
+const replaceClub = (req, res, next)=>{
     club
         .replaceClub(req.body._id, req.body)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))   
+        .catch(next)   
 }
 
-const updateClub = (req,res)=>{
+const updateClub = (req, res, next)=>{
     club
         .updateClub(req.body._id, req.body)
         .then(data=>res.status(200).json(data))
-        .catch(err=>res.status(500).json({error:true, message:err}))   
+        .catch(next)   
 }
 
-const deleteClub = (req,res)=>{
+const deleteClub = (req, res, next)=>{
     res.redirect('/')
 }
 
+router.use((req, res, next)=>{
+    console.log("Club route middleware stub")
+    next()
+})
 
 router.get('/', publicArea, getClubs);
 router.get('/:id', publicArea, getClub);

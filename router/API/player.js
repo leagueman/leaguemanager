@@ -3,32 +3,36 @@ const router = express.Router();
 const {publicArea, privateArea} = require('../../auth/authorisation');
 const {player} = require('../../database/controllers/');
 
-const getPlayers = (req,res)=>{
+const getPlayers = (req, res, next)=>{
     res.redirect('/')
 }
-const getPlayer = (req,res)=>{
-    res.redirect('/')
-}
-
-
-
-
-const newPlayer = (req,res)=>{
+const getPlayer = (req, res, next)=>{
     res.redirect('/')
 }
 
-const replacePlayer = (req,res)=>{
+
+
+
+const newPlayer = (req, res, next)=>{
     res.redirect('/')
 }
 
-const updatePlayer = (req,res)=>{
+const replacePlayer = (req, res, next)=>{
     res.redirect('/')
 }
 
-const deletePlayer = (req,res)=>{
+const updatePlayer = (req, res, next)=>{
     res.redirect('/')
 }
 
+const deletePlayer = (req, res, next)=>{
+    res.redirect('/')
+}
+
+router.use((req,res,next)=>{
+    console.log("Player route middleware stub")
+    next()
+})
 
 router.get('/', publicArea, getPlayers);
 router.get('/:id', publicArea, getPlayer);
