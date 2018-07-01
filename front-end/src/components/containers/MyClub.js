@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography'
-import {standardGet} from '../../utilities/fetchOptions'
+import {getStandard} from '../../utilities/fetchOptions'
 
 class MyClub extends Component {
     state = {
@@ -9,7 +9,7 @@ class MyClub extends Component {
     async componentDidMount(){
     console.log(this.props)
         this.setState({
-            club: await fetch('http://localhost:9000/api/club/5b2acc4113f3f70c087f3462', standardGet)
+            club: await fetch('http://localhost:9000/api/club/5b2acc4113f3f70c087f3462', getStandard)
                             .then(res=>res.json())})
     }
 

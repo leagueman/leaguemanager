@@ -1,19 +1,20 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom'
 import AdminLayout from '../../layout/AdminLayout'
 
 import USER from '../../../USER'
 
-const isAdmin = () => {
+const IsAdmin = () => {
     return (
         
         <USER.Consumer>
         { ( {user} )=>{
-            console.log("Token: "+user.token)
-             return <AdminLayout user={user}/>
+            console.log("User: ", user)
+            return (user.success && user.user && user.user.isAdmin) ? <AdminLayout user={user}/> : <Redirect to='/login'/>
           }
         }
       </USER.Consumer>
     );
 };
 
-export default isAdmin;
+export default IsAdmin;

@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid'
 import LoginContainer from '../containers/LoginContainer'
+import {Redirect} from 'react-router-dom'
 
 import USER from '../../USER'
 
@@ -12,7 +13,8 @@ const Login = () => {
             
             <USER.Consumer>
               { ( {user, newUser} )=>{
-                   return <LoginContainer onLogin={newUser} user={user}/>
+                    if(user.redirectTo) return <Redirect to={user.redirectTo} />
+                    return <LoginContainer onLogin={newUser} user={user}/>
                 }
               }
             </USER.Consumer>

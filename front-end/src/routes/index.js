@@ -1,45 +1,37 @@
 import HomeLayout from "../components/layout/HomeLayout";
 import IsAdmin from "../components/containers/auth/IsAdmin";
+import IsClubOfficial from "../components/containers/auth/IsClubOfficial";
+import IsTeamManager from "../components/containers/auth/IsTeamManager";
+import IsReferee from "../components/containers/auth/IsReferee";
+import IsLeagueSecretary from "../components/containers/auth/IsLeagueSecretary";
+import IsMember from "../components/containers/auth/IsMember";
+
 const Routes = [
     { 
-        // link: "League Secretary",
-        // pageTitle: "League Secretary",
         path: "/member", 
-        component: HomeLayout 
+        component: IsMember 
     },
     { 
-        // link: "League Secretary",
-        // pageTitle: "League Secretary",
         path: "/clubofficial", 
-        component: HomeLayout 
+        component: IsClubOfficial 
     },
     { 
-        // link: "League Secretary",
-        // pageTitle: "League Secretary",
         path: "/teammanager", 
-        component: HomeLayout 
+        component: IsTeamManager 
     },
     { 
-        // link: "League Secretary",
-        // pageTitle: "League Secretary",
         path: "/referee", 
-        component: HomeLayout 
+        component: IsReferee 
     },
     { 
-        // link: "League Secretary",
-        // pageTitle: "League Secretary",
         path: "/leaguesecretary", 
-        component: HomeLayout 
+        component: IsLeagueSecretary 
     },
     { 
-        // link: "Admin Dashboard",
-        // pageTitle: "Administration Dashboard",
         path: "/admin", 
         component: IsAdmin 
     },
     { 
-        // link: "Home",
-        // pageTitle: "League Manager",
         path: "/", 
         component: HomeLayout 
     },

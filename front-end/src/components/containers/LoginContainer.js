@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom'
 import LoginForm from '../LoginForm'
 import {validateEmail} from '../../utilities/validation'
-import {standardGet} from '../../utilities/fetchOptions'
+import {getStandard} from '../../utilities/fetchOptions'
 
 class LoginContainer extends Component {
     constructor(){
@@ -11,7 +10,7 @@ class LoginContainer extends Component {
             loginError:false,
             loginErrorWith: "",
             loginErrorProblem: "",
-            token:''
+            token:'',
         }
     }
     
@@ -39,19 +38,34 @@ class LoginContainer extends Component {
             credentials: 'include',
         })
         .then(res=>res.json())
-        
-        if(response.error){ 
-            this.setError(true, response.message)
-        }else{
-            this.setState({token:response.token})
-            this.props.onLogin(response)
-        }
+        .then(res=>{
+
+            if(res.error){ 
+                this.setError(true, res.message)
+            }else{
+                res.redirectTo = '/'
+                if(res.user){
+                    if(res.user.isAdmin) res.redirectTo = '/admin'
+                    if(res.user.isClubOfficial) res.redirectTo = '/clubofficial'
+                    if(res.user.isLeagueSecretary) res.redirectTo = '/leaguesecretary'
+                    if(res.user.isReferee) res.redirectTo = '/referee'  //?
+                    if(res.user.isTeamManager) res.redirectTo = '/teammanager'  
+                    if(res.user.isMember) res.redirectTo = '/member'  
+                }
+                
+                this.props.onLogin(res)
+            }
+        })
+
+
     }
 
 
     render() {
-        if(this.state.token) return <Redirect to="/"/>
-        else return <LoginForm onLogin={this.onLogin.bind(this)} {...this.state} /> 
+        // console.log(this.state.token, this.state.redirectTo)
+        // if(this.state.token) return <Redirect to={this.state.redirectTo}/>
+        // else 
+        return <LoginForm onLogin={this.onLogin.bind(this)} {...this.state} /> 
     }
 }
 

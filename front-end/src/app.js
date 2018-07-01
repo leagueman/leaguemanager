@@ -1,7 +1,7 @@
 
 import React, { Fragment, Component } from "react";
 import { createBrowserHistory } from "history";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 import Routes from "./routes";
 import USER from './USER'
@@ -25,10 +25,12 @@ class App extends Component {
     constructor(){
         super()
 
-        this.addUser = user=>{
+        this.addUser = (user, redirectTo)=>{
             console.log("New User added to context", user)
-            if(!user.user.title) user.user.title = "Richard"
-            this.setState({user})
+            if(user.user && !user.user.title) user.user.title = "Richard"
+            this.setState({user}, ()=>{
+                // window.location.href = redirectTo
+            })
         }
 
         this.state = {

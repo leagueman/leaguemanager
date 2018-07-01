@@ -20,6 +20,7 @@ const checkToken = (req, cb)=>{
         jwt.verify(token, process.env.SECRET_CODE, (err, decodedToken) =>{
             console.log("Verifying Token")
             if (err) cb({error:true, message:err})
+            // console.log(decodedToken)
             if (!decodedToken) cb({error:true, message:"Couldn't decode the provided token"}) 
             else cb({decodedToken}) 
         })

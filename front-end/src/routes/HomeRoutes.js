@@ -19,13 +19,13 @@ const Routes = [
         path: "/login", 
         component: LoginLayout 
     },
-    { 
-        order:3,
-        link: "Admin Dashboard",
-        pageTitle: "Dashboard",
-        path: "/admin", 
-        component: AdminLayout 
-    },
+    // { 
+    //     order:3,
+    //     link: "Admin Dashboard",
+    //     pageTitle: "Dashboard",
+    //     path: "/admin", 
+    //     component: AdminLayout 
+    // },
     { 
         order:2,
         link: "My Club",

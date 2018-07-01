@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
 import Users from '../Users'
-import {standardGet} from '../../utilities/fetchOptions'
+import {getStandard} from '../../utilities/fetchOptions'
 
-class MyClub extends Component {
+class UsersContainer extends Component {
     state = {
         users:[]
     }
     async componentDidMount(){
-        console.log(this.props)
-        this.setState({
-            users: await fetch('http://localhost:9000/api/user', standardGet)
-                            .then(res=>res.json())})
+        let users = await fetch('http://localhost:9000/api/user', getStandard)            
+                        .then(res=>res.json())
+                        .catch(err=>console.log(err))
+        if(!users.error) this.setState({users})
     }
 
     
     render() {
-        console.log(this.props.user)
-        return (
-            <div>
-                <Users users={this.state.users} user={this.props.user}/>
-            </div>
-        );
+        return (<Users users={this.state.users} user={this.props.user}/>);
     }
 }
 
-export default MyClub;
+export default UsersContainer;

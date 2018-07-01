@@ -8,38 +8,70 @@ import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
 import JSStyle from '../assets/jss/JSStyle'
 import { withStyles } from '@material-ui/core/styles'
+import {getStandard, getRequest} from '../utilities/fetchOptions'
 
 class RegisterForm extends React.Component {
     constructor(){
         super()
         this.state = {
+            organisations:[],
+            clubs:[],
+            teams:[],
             email:"",
             password1:"", 
             password2:"", 
-            title:""
+            title:"", 
+            organisation:'',
+            club:'',
+            team:'',
         }
     }
-   
-    changeTitle= (e)=>{
-        this.setState({title: e.currentTarget.value})
+  
+    async componentDidMount(){
+        this.setState({
+            organisations: await fetch('http://localhost:9000/api/organisation', getStandard)
+                            .then(res=>res.json()),
+            clubs:[],
+            teams:[],
+        })
     }
-    changeEmail = (e)=>{
-        this.setState({email: e.currentTarget.value})
+    async getClubs(org){
+        if(org) this.setState({
+                        clubs: await fetch('http://localhost:9000/api/organisation/'+org, getStandard)
+                                        .then(res=>res.json())
+                                        .then(res=>res.clubs),
+                        teams:[]
+                })
     }
-    changePassword1 = (e)=>{
-        this.setState({password1: e.currentTarget.value})
+    async getTeams(club){
+        if(club) this.setState({
+                    teams: await fetch('http://localhost:9000/api/club/'+club, getStandard)
+                                    .then(res=>res.json())
+                                    .then(res=>res.teams)
+                })
     }
-    changePassword2 = (e)=>{
-        this.setState({password2: e.currentTarget.value})
+
+    change= (e)=>{
+        this.setState({[e.target.name]: e.target.value})
+        if(e.target.name==='organisation') this.getClubs(e.target.value)
+        if(e.target.name==='club') this.getTeams(e.target.value)
     }
+
     onRegister = ()=>{
-        this.props.onRegister(this.state.email, this.state.password1, this.state.password2)
+        this.props.onRegister(this.state)
     }
 
     render() {
         const {classes, loginError, loginErrorProblem } = this.props
+        let organisations = this.state.organisations.map((org, key)=> <MenuItem value={org._id} key={key}>{org.title}</MenuItem>)
+        let clubs = this.state.clubs.map((club, key)=> <MenuItem value={club._id} key={key}>{club.title}</MenuItem>)
+        let teams = this.state.teams.map((team, key)=> <MenuItem value={team._id} key={key}>{team.title}</MenuItem>)
         return (
             <Grid container spacing={32}>
                <Grid item xs sm={2}></Grid>
@@ -59,44 +91,94 @@ class RegisterForm extends React.Component {
                                <FormGroup>
                                    <TextField
                                        id="name"
+                                       name="title"
                                        label="Full Name"
                                        className={classes.textField}
                                        type="text"
                                        value={this.state.title}
-                                       onChange={this.changeTitle}
+                                       onChange={this.change}
                                        // autoComplete="email-address"
                                        // margin="normal"
                                    />
                                    <TextField
                                        id="email"
+                                       name="email"
                                        label="Email Address"
                                        className={classes.textField}
                                        type="email"
                                        value={this.state.email}
-                                       onChange={this.changeEmail}
+                                       onChange={this.change}
                                        // autoComplete="email-address"
                                        // margin="normal"
                                    />
                                    <TextField
                                        id="password1"
+                                       name="password1"
                                        label="Password1"
                                        className={classes.textField}
                                        type="password"
                                        value={this.state.password1}
-                                       onChange={this.changePassword1}
+                                       onChange={this.change}
                                        // autoComplete="current-password"
                                        // margin="normal"
                                    />
                                    <TextField
                                        id="password2"
+                                       name="password2"
                                        label="Password2"
                                        className={classes.textField}
                                        type="password"
                                        value={this.state.password2}
-                                       onChange={this.changePassword2}
+                                       onChange={this.change}
                                        // autoComplete="current-password"
                                        // margin="normal"
                                    />
+                                   <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="organisation">Organisation</InputLabel>
+                                    <Select
+                                        value={this.state.organisation}
+                                        onChange={this.change}
+                                        inputProps={{
+                                            name: 'organisation',
+                                            id: 'organisation',
+                                        }}
+                                    >
+                                        <MenuItem value=""><em>None</em></MenuItem>
+                                        {organisations}
+                                    </Select>
+                                    </FormControl>
+                                    {/* TO-DO populate the organisation from db - Make club and team a drop-down populated on org change  */}
+                                   
+                                    <FormControl>
+                                    <InputLabel htmlFor="club">Club</InputLabel>
+                                    <Select
+                                        value={this.state.club}
+                                        onChange={this.change}
+                                        inputProps={{
+                                            name: 'club',
+                                            id: 'club',
+                                        }}
+                                    >
+                                        <MenuItem value=""><em>None</em></MenuItem>
+                                        {clubs}
+                                    </Select>
+                                    </FormControl>
+
+                                    <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="team">Team</InputLabel>
+                                    <Select
+                                        value={this.state.team}
+                                        onChange={this.change}
+                                        inputProps={{
+                                            name: 'team',
+                                            id: 'team',
+                                        }}
+                                    >
+                                        <MenuItem value=""><em>None</em></MenuItem>
+                                        {teams}
+                                    </Select>
+                                    </FormControl>
+
                                </FormGroup>
                                 Already registered? <Button className={classes.button}>Log In</Button>
                        </CardContent>
