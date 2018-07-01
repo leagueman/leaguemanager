@@ -1,17 +1,47 @@
-import Home from "../components/layout/Home.js";
-import Admin from "../components/layout/Admin";
+import HomeLayout from "../components/layout/HomeLayout";
+import IsAdmin from "../components/containers/auth/IsAdmin";
 const Routes = [
     { 
-        link: "Admin Dashboard",
-        pageTitle: "Administration Dashboard",
-        path: "/admin", 
-        component: Admin 
+        // link: "League Secretary",
+        // pageTitle: "League Secretary",
+        path: "/member", 
+        component: HomeLayout 
     },
     { 
-        link: "Home",
-        pageTitle: "League Manager",
+        // link: "League Secretary",
+        // pageTitle: "League Secretary",
+        path: "/clubofficial", 
+        component: HomeLayout 
+    },
+    { 
+        // link: "League Secretary",
+        // pageTitle: "League Secretary",
+        path: "/teammanager", 
+        component: HomeLayout 
+    },
+    { 
+        // link: "League Secretary",
+        // pageTitle: "League Secretary",
+        path: "/referee", 
+        component: HomeLayout 
+    },
+    { 
+        // link: "League Secretary",
+        // pageTitle: "League Secretary",
+        path: "/leaguesecretary", 
+        component: HomeLayout 
+    },
+    { 
+        // link: "Admin Dashboard",
+        // pageTitle: "Administration Dashboard",
+        path: "/admin", 
+        component: IsAdmin 
+    },
+    { 
+        // link: "Home",
+        // pageTitle: "League Manager",
         path: "/", 
-        component: Home 
+        component: HomeLayout 
     },
 ];
 

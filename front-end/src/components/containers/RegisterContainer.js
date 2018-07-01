@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RegisterForm from '../RegisterForm'
 import {validateEmail} from '../../utilities/validation'
+import {standardGet} from '../../utilities/fetchOptions'
 
 class RegisterContainer extends Component {
     constructor(){
@@ -23,7 +24,9 @@ class RegisterContainer extends Component {
     async onRegister(email, password1, password2){
         this.setError(false, '')
         if( !validateEmail( email ) ) return;
-        let register = await fetch('http://localhost:9000/api/user/', {
+        let register = await fetch('http://localhost:9000/api/user/', 
+        // TO-DO Make a standardPost object in utilities/fetchOptions 
+        {
             method: 'POST',
             body: JSON.stringify({email, password1, password2}),
             headers: {

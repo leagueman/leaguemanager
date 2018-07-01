@@ -1,8 +1,8 @@
-import Home from '../components/layout/Home.js'
-import Admin from '../components/layout/Admin'
-import MyClub from '../components/containers/MyClub'
-import Login from "../components/layout/Login";
-import Register from "../components/layout/Register";
+import HomeLayout from '../components/layout/HomeLayout'
+import AdminLayout from '../components/layout/AdminLayout'
+import MyClubLayout from '../components/containers/MyClub'
+import LoginLayout from "../components/layout/LoginLayout";
+import RegisterLayout from "../components/layout/RegisterLayout";
 
 const Routes = [
     { 
@@ -10,35 +10,36 @@ const Routes = [
         link: "Register",
         pageTitle: "Register",
         path: "/register", 
-        component: Register 
+        component: RegisterLayout 
     },
     { 
         order:4,
         link: "Log In",
         pageTitle: "Log In",
         path: "/login", 
-        component: Login 
+        component: LoginLayout 
     },
     { 
         order:3,
         link: "Admin Dashboard",
         pageTitle: "Dashboard",
         path: "/admin", 
-        component: Admin 
+        component: AdminLayout 
     },
     { 
         order:2,
         link: "My Club",
         pageTitle: "My Club",
         path: "/myclub", 
-        component: MyClub 
+        component: MyClubLayout
+     
     },
     { 
         order:1,
         link: "Home",
         pageTitle: "League Manager",
         path: "/", 
-        component: Home 
+        component: HomeLayout 
     },
 ];
 

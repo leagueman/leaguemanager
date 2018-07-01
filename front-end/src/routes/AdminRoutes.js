@@ -1,16 +1,17 @@
-import Admin from "../components/layout/Admin";
-import MyClub from "../components/containers/MyClub.js";
+import AdminLayout from "../components/layout/AdminLayout";
+import HomeLayout from "../components/layout/HomeLayout";
+import UsersContainer from "../components/containers/UsersContainer";
 import SendIcon from '@material-ui/icons/Send';
 import DraftsIcon from '@material-ui/icons/Drafts';
 
 const Routes = [
     { 
         order:2,
-        link: "My Club",
+        link: "Users",
         icon: DraftsIcon,
-        pageTitle: "My CLub",
-        path: "/admin/myclub", 
-        component: MyClub 
+        pageTitle: "Users",
+        path: "/admin/users", 
+        component: UsersContainer 
     },
     {  
         order:1,
@@ -18,7 +19,7 @@ const Routes = [
         icon: SendIcon,
         pageTitle: "Administration Dashboard",
         path: "/admin", 
-        component: Admin 
+        component: AdminLayout 
     },
     {  
         order:0,
@@ -26,7 +27,7 @@ const Routes = [
         icon: SendIcon,
         pageTitle: "Homepage",
         path: "/", 
-        component: Admin 
+        component: HomeLayout 
     },
 ];
 

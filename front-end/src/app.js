@@ -10,15 +10,15 @@ const hist = createBrowserHistory();
 
 const routes = Routes.map((prop, key) => <Route path={prop.path} component={prop.component} key={key} />)
 
-const currentUser = {
-  success:false,
-  title:'',
-  token: '',
-  addUser: newUser=>{
-    this.token = newUser.token
-    console.log(this)
-  }
-}
+// const currentUser = {
+//   success:false,
+//   title:'',
+//   token: '',
+//   addUser: newUser=>{
+//     this.token = newUser.token
+//     console.log(this)
+//   }
+// }
 
 
 class App extends Component {

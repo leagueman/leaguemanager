@@ -7,9 +7,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from '@material-ui/core/Typography'
 import JSStyle from '../../assets/jss/JSStyle'
 import routes from '../../routes/HomeRoutes'
-import Sidebar from '../layout/Sidebar'
-import Header from '../layout/Header'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import Sidebar from '../layout/SidebarLayout'
+import Header from '../layout/HeaderLayout'
 
 
 
@@ -23,17 +22,14 @@ class Home extends Component {
 
         const { classes, ...rest } = this.props;
         return (
-            <Fragment>
-                <CssBaseline />
-                <div className={classes.wrapper}> 
-                    <Header title={"title"} />
-                    <Sidebar routes={routes} />                
-                    <main className={classes.content}>
-                        <div className={classes.toolbar} />
-                        {Routes}
-                    </main>
-                </div>
-            </Fragment>
+            <div className={classes.wrapper}> 
+                <Header title={"title"} />
+                <Sidebar routes={routes} />                
+                <main className={classes.content}>
+                    <div className={classes.toolbar} />
+                    {Routes}
+                </main>
+            </div>
         );
     }
 }

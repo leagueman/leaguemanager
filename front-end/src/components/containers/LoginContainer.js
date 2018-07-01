@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom'
 import LoginForm from '../LoginForm'
 import {validateEmail} from '../../utilities/validation'
+import {standardGet} from '../../utilities/fetchOptions'
 
 class LoginContainer extends Component {
     constructor(){
@@ -25,7 +26,9 @@ class LoginContainer extends Component {
     async onLogin(email, password){
         this.setError(false, '')
         if( !validateEmail( email ) ) return;
-        let response = await fetch('http://localhost:9000/api/user/signin', {
+        let response = await fetch('http://localhost:9000/api/user/signin', 
+        // TO-DO Make a standardPost object in utilities/fetchOptions         
+        {
             method: 'POST',
             body: JSON.stringify({email, password}),
             headers: {

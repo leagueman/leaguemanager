@@ -5,8 +5,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from '@material-ui/core/Typography'
 import JSStyle from '../../assets/jss/JSStyle'
 import routes from '../../routes/AdminRoutes'
-import Sidebar from '../layout/Sidebar'
-import Header from '../layout/Header'
+import Sidebar from '../layout/SidebarLayout'
+import Header from '../layout/HeaderLayout'
 
 
 
@@ -14,7 +14,7 @@ class Admin extends Component {
     render() {
         const Routes = (
             <Switch>
-              {routes.map((prop, key) => <Route path={prop.path} component={prop.component} key={key} exact={true}/> )}
+              {routes.map((prop, key) => <Route path={prop.path} component={prop.component} key={key} exact={true} user={this.props.user}/> )}
             </Switch>
           );
 
