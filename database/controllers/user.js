@@ -10,21 +10,27 @@ module.exports = {
             .populate({ path: 'team' })
             .populate({ path: 'club' })
             .populate({ path: 'organisation' })
-            .then(data=> bcrypt.compareSync(password, data.password) ? data : {error:true, message:"Incorrect password"})
+            .then(data=>{
+                if(!data) throw "Email address not found"
+                return data
+            })
+            .then(data=> {
+                if(bcrypt.compareSync(password, data.password)) return data 
+                else throw "Incorrect password"
+            })
             .then(data=>{
                 data.password = ""
                 return data
             })
             .then(data=>({
                 success: true,
-                is_admin: data.is_admin,
-                is_club_official: data.is_club_official,
+                user: data,
                 token: createToken({
                     payload: data,
                     maxAge: 3600
                 })
             }))
-            .catch(err=>console.log({error:true, message:err}))
+            .catch(err=>({error:true, message:err}))
     ), 
 
     signup: ({title, email, password1, password2, last_signed_in, is_admin, is_club_official, team, club})=>{

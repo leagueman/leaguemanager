@@ -54,7 +54,7 @@ router.use((req, res, next)=>{
 })
 
 router.get('/', publicArea, getClubs);
-router.get('/:id', publicArea, getClub);
+router.get('/:id', privateArea, getClub);
 router.get('/:id/officials', publicArea, getClubOfficials);
 router.post('/', publicArea, newClub);
 router.put('/:id', privateArea, replaceClub);

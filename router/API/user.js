@@ -7,25 +7,28 @@ const {user} = require('../../database/controllers/');
 const signin = (req, res, next)=>{
     user
         .signin(req.body)
-        // .then(data=>res.status(200).json(data))
+        .then(data=>{
+            if(data.error) throw data.message
+            else return data
+        })
         .then(data=>{
             res.cookie('token', data.token)
-            if(!req.xhr){
-                if(data.is_admin) res.redirect('/dashboard/admin?token='+data.token)
-                else if(data.is_club_official) res.redirect('/dashboard/club?token='+data.token)
-                else{
-                    res.redirect('/myteam')
-                } 
-            }else{
-                res.status(200).json(data.token)
-                // res.redirect('/myteam?token='+data.token)
-            }
+            // if(!req.xhr){
+            //     if(data.is_admin) res.redirect('/dashboard/admin?token='+data.token)
+            //     else if(data.is_club_official) res.redirect('/dashboard/club?token='+data.token)
+            //     else{
+            //         res.redirect('/myteam')
+            //     } 
+            // }else{
+                res.status(200).json(data)
+            // }
         })
         .catch(next)
 
 }
 
 const signup = (req, res, next)=>{
+    console.log(req.body)
     user    
         .signup(req.body)
         .then(data=>res.status(200).json(data))
