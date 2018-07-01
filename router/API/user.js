@@ -38,9 +38,10 @@ const signup = (req, res, next)=>{
 const getUsers = (req, res, next)=>{
 
     //THIS LOGIC SHOULD BE HANDLED BY A MIDDLEWARE
-    if(req.user && req.user.is_admin){
+    // this should also crewate a query based on the user type (admin, club official, etc)
+    if(req.user && req.user.isAdmin){
         user
-            .find({})
+            .getUsers({})
             .then(users=>res.status(200).json(users))
             .catch(next)
     }else{
