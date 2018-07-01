@@ -24,7 +24,12 @@ const Header = ({ classes }) => {
            { ( {user, newUser} )=>{
                   return user.token 
                     ? <AccountMenu user={user}/>
-                    : <Button color="inherit" component={Link} to={'/login'} from={window.location.href}>Login</Button>
+                    : (
+                      <Fragment>
+                        <Button size="small" color="inherit" component={Link} to={'/login'} from={window.location.href}>Login</Button>
+                        <Button size="small" color="inherit" component={Link} to={'/register'} from={window.location.href}>Register</Button>
+                      </Fragment>
+                      )
              }
            }
          </USER.Consumer>

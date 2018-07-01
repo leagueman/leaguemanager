@@ -65,7 +65,7 @@ class LoginContainer extends Component {
         // console.log(this.state.token, this.state.redirectTo)
         // if(this.state.token) return <Redirect to={this.state.redirectTo}/>
         // else 
-        return <LoginForm onLogin={this.onLogin.bind(this)} {...this.state} /> 
+        return <LoginForm onError={this.setError.bind(this)} onLogin={this.onLogin.bind(this)} {...this.state} /> 
     }
 }
 

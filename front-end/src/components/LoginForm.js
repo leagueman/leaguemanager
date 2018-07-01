@@ -34,12 +34,9 @@ class LoginForm extends Component {
         this.props.onLogin(this.state.email, this.state.password)
     }
 
-    // handleSnackbarClose = ()=>{
-    //     this.setState({
-    //         SnackbarMessage:'',
-    //         SnackbarOpen:false
-    //     })
-    // }
+    handleSnackbarClose = ()=>{
+        this.props.onError(false, '')
+    }
 
     // static getDerivedStateFromProps(nextProps, prevState){
     //     return nextProps.loginError !== prevState.SnackbarOpen ?  {SnackbarOpen: nextProps.loginError, SnackbarMessage:nextProps.loginErrorProblem } : {}
@@ -109,7 +106,7 @@ class LoginForm extends Component {
                         anchorOrigin={{vertical:'top', horizontal:'center'}}
                         open={this.props.loginError}
                         onClose={this.handleSnackbarClose}
-                        autoHideDuration={5000}
+                        autoHideDuration={2500}
                         message={this.props.loginErrorProblem}
                     />      
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import RegisterForm from '../RegisterForm'
-import {validateEmail} from '../../utilities/validation'
 import {getStandard} from '../../utilities/fetchOptions'
 
 class RegisterContainer extends Component {
@@ -22,12 +21,7 @@ class RegisterContainer extends Component {
     }
 
     async onRegister({title, email, password1, password2, organisation, club, team}){
-        // if(body.organisations) delete body.organisations
-        // if(body.clubs) delete body.clubs
-        // if(body.teams) delete body.teams
-        console.log({title, email, password1, password2, organisation, club, team})
         this.setError(false, '')
-        // if( !validateEmail( email ) ) return;
         let register = await fetch('http://localhost:9000/api/user/', 
         // TO-DO Make a standardPost object in utilities/fetchOptions 
         {
@@ -55,7 +49,7 @@ class RegisterContainer extends Component {
     }
 
     render() {
-        return <RegisterForm onRegister={this.onRegister.bind(this)} {...this.state} />
+        return <RegisterForm onError={this.setError.bind(this)} onRegister={this.onRegister.bind(this)} {...this.state} />
     }
 }
 

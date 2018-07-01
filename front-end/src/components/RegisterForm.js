@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import FormGroup from '@material-ui/core/FormGroup'
@@ -12,6 +12,8 @@ import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
+import Snackbar from '@material-ui/core/Snackbar'
+import Typography from '@material-ui/core/Typography'
 import JSStyle from '../assets/jss/JSStyle'
 import { withStyles } from '@material-ui/core/styles'
 import {getStandard, getRequest} from '../utilities/fetchOptions'
@@ -57,22 +59,51 @@ class RegisterForm extends React.Component {
                 })
     }
 
-    change= (e)=>{
+    change = (e)=>{
         this.setState({[e.target.name]: e.target.value})
         if(e.target.name==='organisation') this.getClubs(e.target.value)
         if(e.target.name==='club') this.getTeams(e.target.value)
     }
 
-    onRegister = ()=>{
-        this.props.onRegister(this.state)
+    // TO-DO The snackbar disappears immediatly when invoked by onBlur
+    checkPasswords = ()=>{
+        if(this.state.password1.length<6){
+            this.props.onError(true, "Password is too short. It must be at least 6 characters long")
+            return false
+        }else if(this.state.password1 !== this.state.password2){
+            this.props.onError(true, "Passwords don't match")
+            return false
+        }
+        return true
     }
 
+    handleSnackbarClose = ()=>{
+        this.props.onError(false, '')
+    }
+
+    onRegister = ()=>{
+        this.validate() && this.props.onRegister(this.state)
+    }
+
+    validate = ()=>{
+        if(!this.checkPasswords()) return false
+       if(!this.state.email.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)){
+           this.props.onError(true, "Email Address not valid")
+           return false
+       } 
+       if(!this.state.title.match(/^[a-zA-Z]+$/)){
+           this.props.onError(true, "Name not valid")
+           return false
+       } 
+       return true 
+    }
     render() {
         const {classes, loginError, loginErrorProblem } = this.props
         let organisations = this.state.organisations.map((org, key)=> <MenuItem value={org._id} key={key}>{org.title}</MenuItem>)
         let clubs = this.state.clubs.map((club, key)=> <MenuItem value={club._id} key={key}>{club.title}</MenuItem>)
         let teams = this.state.teams.map((team, key)=> <MenuItem value={team._id} key={key}>{team.title}</MenuItem>)
         return (
+        <Fragment>
             <Grid container spacing={32}>
                <Grid item xs sm={2}></Grid>
                <Grid item xs>                                    
@@ -119,9 +150,13 @@ class RegisterForm extends React.Component {
                                        type="password"
                                        value={this.state.password1}
                                        onChange={this.change}
+                                       onBlur={this.checkPasswords}
                                        // autoComplete="current-password"
                                        // margin="normal"
                                    />
+                                    <Typography variant="caption">
+                                        * Must be minimum 6 characters long
+                                    </Typography>
                                    <TextField
                                        id="password2"
                                        name="password2"
@@ -194,6 +229,15 @@ class RegisterForm extends React.Component {
                </Grid>
                <Grid item xs sm={2}></Grid>
            </Grid>
+           
+           <Snackbar
+                anchorOrigin={{vertical:'top', horizontal:'center'}}
+                open={this.props.registerError}
+                onClose={this.handleSnackbarClose}
+                autoHideDuration={2500}
+                message={this.props.registerErrorProblem}
+            />      
+           </Fragment>
         );
     }
 }
