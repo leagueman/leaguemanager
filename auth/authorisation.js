@@ -15,6 +15,7 @@ const getToken = (req)=>req.cookies.token || req.body.token || req.query.token |
 
 const checkToken = (req, cb)=>{
     let token = getToken(req)
+    console.log(token)
     if(token){
         jwt.verify(token, process.env.SECRET_CODE, (err, decodedToken) =>{
             console.log("Verifying Token")
