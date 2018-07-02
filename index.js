@@ -28,6 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(attachCORSHeaders);
 
+var passport = require('passport');
+app.use(passport.initialize());
 
 app.use(router);
 
