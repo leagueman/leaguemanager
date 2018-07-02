@@ -25,7 +25,7 @@ const Schema = new mongoose.Schema({
     club:  {type: ObjectId, ref: 'club'},
     organisation:  {type: ObjectId, ref: 'organisation'},
 })
-Schema.pre('save', function (next) {
+Schema.pre('save', function(next) {
     var user = this;
     if (this.isModified('password') || this.isNew) {
         let hashedPassword = bcrypt.hashSync(password1, 8);
@@ -34,9 +34,9 @@ Schema.pre('save', function (next) {
         return next();
     }
 });
-Schema.methods.comparePassword = function (password, cb) {
+Schema.methods.comparePassword = function(password, cb) {   
     if(bcrypt.compareSync(password, this.password)) cb(null, true)
-    else throw cb("Passwords don't match err")
-};
+    else throw cb(true, false)
+}
 
 module.exports = mongoose.model('user', Schema);
