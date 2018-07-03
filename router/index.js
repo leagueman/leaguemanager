@@ -8,8 +8,6 @@ const router = express.Router();
 
 router.use('/api', router_api);
 
-router.post('/signup', signup);
-router.post('/signin', signin);
   
 router.get('/test', Authenticate, function(req, res) {    
   res.json({success: true, msg: 'Got the test page'});

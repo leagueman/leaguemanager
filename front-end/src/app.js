@@ -26,7 +26,6 @@ class App extends Component {
         super()
 
         this.addUser = (user, redirectTo)=>{
-            console.log("New User added to context", user)
             if(user.user && !user.user.title) user.user.title = "Richard"
             this.setState({user}, ()=>{
                 // window.location.href = redirectTo

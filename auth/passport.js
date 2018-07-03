@@ -46,8 +46,9 @@ const signin = (req, res)=> {
       if (!user) res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})
       else {
         user.comparePassword(req.body.password, (err, isMatch)=> {
+            user.password = ""
             if(err) res.status(401).send({success: false, msg: 'Authentication failed. There was an error'})
-            else if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60} )} )
+            else if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60} ), user:user} )
             else res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'})      
         });
       }

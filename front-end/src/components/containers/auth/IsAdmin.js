@@ -9,7 +9,6 @@ const IsAdmin = () => {
         
         <USER.Consumer>
         { ( {user} )=>{
-            console.log("User: ", user)
             return (user.success && user.user && user.user.isAdmin) ? <AdminLayout user={user}/> : <Redirect to='/login'/>
           }
         }

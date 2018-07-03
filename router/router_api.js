@@ -1,5 +1,6 @@
 const express = require('express');
-const {Authenticate} = require('../auth/passport');
+const { Authenticate, signin, signup } = require('../auth/passport');
+
 
 const router = express.Router();
 
@@ -15,6 +16,8 @@ router.use('/score', require('./API/score'));
 router.use('/team', require('./API/team'));
 router.use('/user', Authenticate, require('./API/user'));
 router.use('/venue', require('./API/venue'));
+router.post('/signin', signin);
+router.post('/signup', signup);
 
 router.use('/', (req,res)=>{
      res.json({title:"League Manager"});

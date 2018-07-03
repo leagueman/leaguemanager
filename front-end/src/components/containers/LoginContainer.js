@@ -25,7 +25,7 @@ class LoginContainer extends Component {
     async onLogin(email, password){
         this.setError(false, '')
         if( !validateEmail( email ) ) return;
-        let response = await fetch('http://localhost:9000/signin',
+        let response = await fetch('http://localhost:9000/api/signin',
         // // TO-DO Make a standardPost object in utilities/fetch  
         {
             method: 'POST',
@@ -39,7 +39,6 @@ class LoginContainer extends Component {
         })
         .then(res=>res.json())
         .then(res=>{
-
             if(res.error){ 
                 this.setError(true, res.message)
             }else{
