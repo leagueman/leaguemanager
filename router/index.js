@@ -15,7 +15,7 @@ router.get('/test', Authenticate, function(req, res) {
   res.json({success: true, msg: 'Got the test page'});
 });
 
-router.use('/', router_view);
+// router.use('/', router_view);
 
 
 router.use((req,res)=>{

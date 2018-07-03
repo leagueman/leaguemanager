@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography'
-import {getStandard} from '../../utilities/fetchOptions'
+import {getStandard} from '../../utilities/fetch'
 
 class MyClub extends Component {
     state = {

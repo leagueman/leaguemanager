@@ -40,6 +40,7 @@ const Passport = passport=> {
 
 
 const signin = (req, res)=> {
+    console.log(req.body)
     User.findOne({ email: req.body.email }, (err, user)=> {
       if (err) throw err;
       if (!user) res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})

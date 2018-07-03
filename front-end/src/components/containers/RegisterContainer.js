@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import RegisterForm from '../RegisterForm'
-import {getStandard} from '../../utilities/fetchOptions'
+import {getStandard} from '../../utilities/fetch'
 
 class RegisterContainer extends Component {
     constructor(){
@@ -23,7 +23,7 @@ class RegisterContainer extends Component {
     async onRegister({title, email, password1, password2, organisation, club, team}){
         this.setError(false, '')
         let register = await fetch('http://localhost:9000/api/user/', 
-        // TO-DO Make a standardPost object in utilities/fetchOptions 
+        // TO-DO Make a standardPost object in utilities/fetch 
         {
             method: 'POST',
             body: JSON.stringify({title, email, password1, password2, organisation, club, team}),

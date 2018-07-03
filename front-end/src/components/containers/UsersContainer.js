@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Users from '../Users'
-import {getStandard} from '../../utilities/fetchOptions'
+import {getStandard} from '../../utilities/fetch'
 
 class UsersContainer extends Component {
     state = {

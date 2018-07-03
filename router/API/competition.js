@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {publicArea, privateArea} = require('../../auth/authorisation');
+const {Authenticate} = require('../../auth/passport');
 const {competition, league, division} = require('../../database/controllers/');
 
 const getCompetitions = (req, res, next)=>{
@@ -73,11 +73,11 @@ router.use((req, res, next)=>{
     next()
 })
 
-router.get('/', publicArea, getCompetitions);
-router.get('/:id', publicArea, getCompetition);
-router.post('/', publicArea, newCompetition);
-router.put('/:id', privateArea, replaceCompetition);
-router.patch('/:id', privateArea, updateCompetition);
-router.delete('/:id', privateArea, deleteCompetition);
+router.get('/', getCompetitions);
+router.get('/:id', getCompetition);
+router.post('/', newCompetition);
+router.put('/:id', Authenticate, replaceCompetition);
+router.patch('/:id', Authenticate, updateCompetition);
+router.delete('/:id', Authenticate, deleteCompetition);
 
 module.exports = router;

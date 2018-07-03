@@ -1,3 +1,5 @@
+// import axios from 'axios';
+
 module.exports = {
     getStandard: {
         method: 'GET',
@@ -18,4 +20,8 @@ module.exports = {
         cache: 'no-cache',
         credentials: 'include',
     }),
+    // axios: ()=>(axios.create({
+    //     baseURL: 'https://localhost:9000',
+    //     timeout: 1000,
+    // })),
 }

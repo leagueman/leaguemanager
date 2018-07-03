@@ -1,20 +1,20 @@
 const express = require('express');
-const {publicArea, privateArea} = require('../auth/authorisation');
+const {Authenticate} = require('../auth/passport');
 
 const router = express.Router();
 
-router.use('/club', publicArea, require('./API/club'));
-router.use('/competition', publicArea, require('./API/competition'));
-router.use('/division', publicArea, require('./API/division'));
-router.use('/fixture', publicArea, require('./API/fixture'));
-router.use('/league', publicArea, require('./API/league'));
-router.use('/organisation', publicArea, require('./API/organisation'));
-router.use('/player', publicArea, require('./API/player'));
-router.use('/referee', publicArea, require('./API/referee'));
-router.use('/score', publicArea, require('./API/score'));
-router.use('/team', publicArea, require('./API/team'));
-router.use('/user', publicArea, require('./API/user'));
-router.use('/venue', publicArea, require('./API/venue'));
+router.use('/club', require('./API/club'));
+router.use('/competition', require('./API/competition'));
+router.use('/division', require('./API/division'));
+router.use('/fixture', require('./API/fixture'));
+router.use('/league', require('./API/league'));
+router.use('/organisation', require('./API/organisation'));
+router.use('/player', require('./API/player'));
+router.use('/referee', require('./API/referee'));
+router.use('/score', require('./API/score'));
+router.use('/team', require('./API/team'));
+router.use('/user', Authenticate, require('./API/user'));
+router.use('/venue', require('./API/venue'));
 
 router.use('/', (req,res)=>{
      res.json({title:"League Manager"});

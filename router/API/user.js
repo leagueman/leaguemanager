@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const {publicArea, privateArea} = require('../../auth/authorisation');
+const {privateArea} = require('../../auth/authorisation');
 const {user} = require('../../database/controllers/');
 
 
 const signin = (req, res, next)=>{
+    console.log("OLD SIGNIN")
+    console.log(req.body)
     user
         .signin(req.body)
         .then(data=>{
@@ -89,8 +91,8 @@ router.use((req,res,next)=>{
 router.get('/', privateArea, getUsers);
 router.get('/:id', privateArea, getUser);
 router.get('/setteam', privateArea, setTeam);
-router.post('/', publicArea, signup);
-router.post('/signin', publicArea, signin);
+router.post('/', signup);
+router.post('/signin', signin);
 
 router.patch('/:id', privateArea, updateUser);
 
