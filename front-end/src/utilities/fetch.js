@@ -1,27 +1,31 @@
-// import axios from 'axios';
+let Authorization = ''
 
-module.exports = {
-    getStandard: {
-        method: 'GET',
-        headers: {
-        'content-type': 'application/json'
-        },
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'include',
+export const getStandard = ()=>({
+    method: 'GET',
+    headers: {
+        'content-type': 'application/json',
+        'Authorization': Authorization
     },
-    getRequest: (body)=>({
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'include',
+})
+
+export const getRequest = body=>(
+    {
         method: 'GET',
         headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'Authorization': Authorization
         },
         body: body,
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'include',
-    }),
-    // axios: ()=>(axios.create({
-    //     baseURL: 'https://localhost:9000',
-    //     timeout: 1000,
-    // })),
+    }
+)
+
+export const setAuthorization = (token)=>{
+    Authorization = 'Bearer ' + token;
 }
+ 

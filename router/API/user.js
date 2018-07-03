@@ -1,64 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const {privateArea} = require('../../auth/authorisation');
+const { Authenticate, isAdmin } = require('../../auth/passport');
+
 const {user} = require('../../database/controllers/');
 
 
-const signin = (req, res, next)=>{
-    console.log("OLD SIGNIN")
-    console.log(req.body)
+const getUsers = (req, res)=>{
+    console.log("got to API")
     user
-        .signin(req.body)
-        .then(data=>{
-            if(data.error) throw data.message
-            else return data
-        })
-        .then(data=>{
-            res.cookie('token', data.token)
-            // if(!req.xhr){
-            //     if(data.is_admin) res.redirect('/dashboard/admin?token='+data.token)
-            //     else if(data.is_club_official) res.redirect('/dashboard/club?token='+data.token)
-            //     else{
-            //         res.redirect('/myteam')
-            //     } 
-            // }else{
-                res.status(200).json(data)
-            // }
-        })
-        .catch(next)
+        .getUsers({})
+        .then(users=>res.status(200).json(users))
+        .catch(err=>console.log(err))
 
-}
-
-const signup = (req, res, next)=>{
-    console.log(req.body)
-    user    
-        .signup(req.body)
-        .then(data=>res.status(200).json(data))
-        .catch(next)
-}
-
-const getUsers = (req, res, next)=>{
-
-    //THIS LOGIC SHOULD BE HANDLED BY A MIDDLEWARE
-    // this should also crewate a query based on the user type (admin, club official, etc)
-    if(req.user && req.user.isAdmin){
-        user
-            .getUsers({})
-            .then(users=>res.status(200).json(users))
-            .catch(next)
-    }else{
-        res.status(200).json({error:true, message:"Not Authorised to view this data"})
-    }
 }
 const getUser = (req, res, next)=>{
-        user
-            .getUser(req.params.id)
-            .then(users=>res.status(200).json(users))
-            .catch(next)
+    user
+        .getUser(req.params.id)
+        .then(users=>res.status(200).json(users))
+        .catch(next)
 }
 
 const updateUser = (req, res, next)=>{
-    console.log(req.query)
     user
         .updateUser(req.user._id, req.body)
         .then(data=>res.status(200).json(data))
@@ -88,17 +50,15 @@ router.use((req,res,next)=>{
     next()
 })
 
-router.get('/', privateArea, getUsers);
-router.get('/:id', privateArea, getUser);
-router.get('/setteam', privateArea, setTeam);
-router.post('/', signup);
-router.post('/signin', signin);
+router.get('/', Authenticate, isAdmin, getUsers);
+router.get('/:id', getUser);
+router.get('/setteam', setTeam);
 
-router.patch('/:id', privateArea, updateUser);
+router.patch('/:id', updateUser);
 
 //TO DO
-router.put('/:id', privateArea, replaceUser);
-router.delete('/:id', privateArea, deleteUser);
+router.put('/:id', replaceUser);
+router.delete('/:id', deleteUser);
 
 router.use((req, res, next)=>{
     res.json({});

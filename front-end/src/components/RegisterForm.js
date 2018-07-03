@@ -16,6 +16,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import Typography from '@material-ui/core/Typography'
 import JSStyle from '../assets/jss/JSStyle'
 import { withStyles } from '@material-ui/core/styles'
+
 import {axios, getStandard, getRequest} from '../utilities/fetch'
 
 class RegisterForm extends React.Component {

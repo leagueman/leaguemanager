@@ -14,7 +14,7 @@ router.use('/player', require('./API/player'));
 router.use('/referee', require('./API/referee'));
 router.use('/score', require('./API/score'));
 router.use('/team', require('./API/team'));
-router.use('/user', Authenticate, require('./API/user'));
+router.use('/user',  require('./API/user'));
 router.use('/venue', require('./API/venue'));
 router.post('/signin', signin);
 router.post('/signup', signup);

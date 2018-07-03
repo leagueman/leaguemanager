@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import LoginForm from '../LoginForm'
 import {validateEmail} from '../../utilities/validation'
-// import {getStandard} from '../../utilities/fetch'
+import {setAuthorization} from '../../utilities/fetch'
 
 class LoginContainer extends Component {
     constructor(){
@@ -26,7 +26,7 @@ class LoginContainer extends Component {
         this.setError(false, '')
         if( !validateEmail( email ) ) return;
         let response = await fetch('http://localhost:9000/api/signin',
-        // // TO-DO Make a standardPost object in utilities/fetch  
+        // TO-DO Make a standardPost object in utilities/fetch  
         {
             method: 'POST',
             body: JSON.stringify({email, password}),
@@ -39,9 +39,10 @@ class LoginContainer extends Component {
         })
         .then(res=>res.json())
         .then(res=>{
-            if(res.error){ 
-                this.setError(true, res.message)
-            }else{
+            setAuthorization(res.token);
+            return res
+        })
+        .then(res=>{
                 res.redirectTo = '/'
                 if(res.user){
                     if(res.user.isAdmin) res.redirectTo = '/admin'
@@ -53,7 +54,7 @@ class LoginContainer extends Component {
                 }
                 
                 this.props.onLogin(res)
-            }
+            // }
         })
 
 
