@@ -1,4 +1,5 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
+import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import FormGroup from '@material-ui/core/FormGroup'
 import Card from '@material-ui/core/Card'
@@ -9,7 +10,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Snackbar from '@material-ui/core/Snackbar'
 
-import JSStyle from '../assets/jss/JSStyle'
+import JSStyle from '../../assets/jss/JSStyle'
 import { withStyles } from '@material-ui/core/styles'
 
 class LoginForm extends Component {
@@ -47,7 +48,11 @@ class LoginForm extends Component {
         const {classes} = this.props
         
         return (     
-                <Fragment>                      
+            <Grid container spacing={32}>
+                <Grid item xs={2}></Grid>
+                <Grid item xs={12} sm={6}> 
+
+
                    <Card>
                        <CardHeader
                            avatar={
@@ -103,7 +108,9 @@ class LoginForm extends Component {
                         message={this.props.loginErrorProblem}
                     />      
 
-                   </Fragment>
+                </Grid>
+                <Grid item xs={2}></Grid>
+            </Grid>
         );
     }
 }

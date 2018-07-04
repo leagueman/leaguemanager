@@ -14,10 +14,10 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import Snackbar from '@material-ui/core/Snackbar'
 import Typography from '@material-ui/core/Typography'
-import JSStyle from '../assets/jss/JSStyle'
+import JSStyle from '../../assets/jss/JSStyle'
 import { withStyles } from '@material-ui/core/styles'
 
-import { getStandard } from '../utilities/fetch'
+import { getStandard } from '../../utilities/fetch'
 
 class RegisterForm extends React.Component {
     constructor(){

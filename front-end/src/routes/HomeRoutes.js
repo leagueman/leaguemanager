@@ -1,6 +1,6 @@
 import MyClubLayout from '../components/containers/MyClub'
-import LoginLayout from "../components/layout/LoginLayout";
-import RegisterLayout from "../components/layout/RegisterLayout";
+import LoginLayout from "../components/login/LoginLayout";
+import RegisterLayout from "../components/register/RegisterLayout";
 
 const Home = ()=>null
 const Routes = [
