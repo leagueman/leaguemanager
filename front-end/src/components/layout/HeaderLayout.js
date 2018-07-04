@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom'
 import USER from '../../USER'
 import AccountMenu from '../AccountMenu';
 
-
 const Header = ({ classes, title }) => {
   return (   
     <AppBar position="absolute" className={classes.appBar}>
@@ -19,7 +18,6 @@ const Header = ({ classes, title }) => {
         League Manager {title}
       </Typography>
 
-       
          <USER.Consumer>
            { ( {user, newUser} )=>{
                   return user.token 

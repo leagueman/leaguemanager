@@ -16,7 +16,7 @@ class MainLayout extends Component {
         
         const Routes = (
             <Switch>
-              {routes && routes.map((prop, key) => <Route path={prop.path} component={prop.component} key={key} exact={true}           /> )} 
+              {routes && routes.map((prop, key) => <Route path={prop.path} component={prop.component} key={key} exact={true} /> )} 
             </Switch>
           );
 

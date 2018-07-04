@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import LoginForm from './LoginForm'
 import {validateEmail} from '../../utilities/validation'
 import {setAuthorization} from '../../utilities/fetch'
+import {typeOfUser} from '../../utilities/utils'
 
 class LoginContainer extends Component {
     constructor(){
@@ -44,16 +45,8 @@ class LoginContainer extends Component {
             return res
         })
         .then(res=>{
-            res.redirectTo = '/'
-            if(res.user){
-                if(res.user.isAdmin) res.redirectTo = '/admin'
-                if(res.user.isClubOfficial) res.redirectTo = '/clubofficial'
-                if(res.user.isLeagueSecretary) res.redirectTo = '/leaguesecretary'
-                if(res.user.isReferee) res.redirectTo = '/referee'  
-                if(res.user.isTeamManager) res.redirectTo = '/teammanager'  
-                if(res.user.isMember) res.redirectTo = '/member'  
-            }
-            
+            let type_of_user = res.user && typeOfUser(res.user)
+            res.redirectTo = type_of_user ? '/'+(type_of_user.substring(2,type_of_user.length)).toLowerCase() : '/'
             this.props.onLogin(res)
         })
         .catch(err=>this.setError(true, err))

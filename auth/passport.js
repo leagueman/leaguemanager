@@ -64,16 +64,14 @@ const Passport = passport=> {
       User.findOne({ email: req.body.email })
         .then(user=> {
             console.log("USER ", user)
-            // if (err) throw err;
-            if (!user) res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})
+            if (!user) throw 'Authentication failed. User not found.'
             else {
                 console.log("NO ERRORS FINDING USER")
                 user.comparePassword(req.body.password, (err, isMatch)=> {
                     console.log("PASSWORDS MATCH", isMatch)
                     user.password = ""
-                    //   if(err) res.status(401).send({success: false, msg: 'Authentication failed. There was an error'})
                     if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60} ), user:user} )
-                    else res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'})      
+                    else throw 'Authentication failed. Wrong password.'      
                 });
             }
         })

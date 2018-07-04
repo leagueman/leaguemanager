@@ -24,7 +24,7 @@ const Routes = [
     },
     {  
         order:1,
-        link: "MainLayout",
+        link: "Dashboard",
         icon: SendIcon,
         pageTitle: "Referee",
         path: "/referee", 
