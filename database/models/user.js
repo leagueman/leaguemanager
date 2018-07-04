@@ -35,7 +35,10 @@ Schema.pre('save', function(next) {
     }
 });
 Schema.methods.comparePassword = function(password, cb) {   
-    if(bcrypt.compareSync(password, this.password)) cb(null, true)
+    if(bcrypt.compareSync(password, this.password)) {
+        console.log("password", password)
+        cb(null, true)
+    }
     else throw cb(true, false)
 }
 

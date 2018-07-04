@@ -1,6 +1,6 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom'
-import AdminLayout from '../../layout/AdminLayout'
+import AdminLayout from '../../OLD/AdminLayout'
 
 import USER from '../../../USER'
 
@@ -12,7 +12,7 @@ const IsAdmin = () => {
             return (user.success && user.user && user.user.isAdmin) ? <AdminLayout user={user}/> : <Redirect to='/login'/>
           }
         }
-      </USER.Consumer>
+        </USER.Consumer>
     );
 };
 

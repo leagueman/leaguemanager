@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {publicArea, privateArea} = require('../../auth/authorisation');
+const { Authenticate, isLeagueSecretary } = require('../../auth/passport');
 const {league} = require('../../database/controllers/');
 
 
@@ -16,14 +16,6 @@ const getLeague = (req, res, next)=>{
         .then(data=>res.status(200).json(data))
         .catch(next)    
 }
-
-
-
-
-
-
-
-
 
 const newLeague = (req, res, next)=>{
     res.redirect('/')
@@ -46,11 +38,11 @@ router.use((req, res, next)=>{
     next()
 })
 
-router.get('/', publicArea, getLeagues);
-router.get('/:id', publicArea, getLeague);
-router.post('/', privateArea, newLeague);
-router.put('/:id', privateArea, replaceLeague);
-router.patch('/:id', privateArea, updateLeague);
-router.delete('/:id', privateArea, deleteLeague);
+router.get('/',  getLeagues);
+router.get('/:id',  getLeague);
+router.post('/', Authenticate, isLeagueSecretary, newLeague);
+router.put('/:id', Authenticate, isLeagueSecretary, replaceLeague);
+router.patch('/:id', Authenticate, isLeagueSecretary, updateLeague);
+router.delete('/:id', Authenticate, isLeagueSecretary, deleteLeague);
 
 module.exports = router;

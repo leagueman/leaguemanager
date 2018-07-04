@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {publicArea, privateArea} = require('../../auth/authorisation');
+const { Authenticate, canUpdateScores } = require('../../auth/passport');
 const {score} = require('../../database/controllers/');
 
 const getScores = (req, res, next)=>{
@@ -33,11 +33,11 @@ router.use((req,res,next)=>{
     next()
 })
 
-router.get('/', publicArea, getScores);
-router.get('/:id', publicArea, getScore);
-router.post('/', privateArea, newScore);
-router.put('/:id', privateArea, replaceScore);
-router.patch('/:id', privateArea, updateScore);
-router.delete('/:id', privateArea, deleteScore);
+router.get('/', getScores);
+router.get('/:id', getScore);
+router.post('/', Authenticate, canUpdateScores, newScore);
+router.put('/:id', Authenticate, canUpdateScores, replaceScore);
+router.patch('/:id', Authenticate, canUpdateScores, updateScore);
+router.delete('/:id', Authenticate, canUpdateScores, deleteScore);
 
 module.exports = router;

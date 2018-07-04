@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableHead from '@material-ui/core/TableHead'
@@ -41,33 +41,3 @@ const Users = (props) => {
 };
 
 export default Users;
-
-
-
-// {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-//     return (
-//       <TableRow key={n.id}>
-//         <TableCell component="th" scope="row">
-//           {n.name}
-//         </TableCell>
-//         <TableCell numeric>{n.calories}</TableCell>
-//         <TableCell numeric>{n.fat}</TableCell>
-//       </TableRow>
-//     );
-//   })}
-//   {emptyRows > 0 && (
-//     <TableRow style={{ height: 48 * emptyRows }}>
-//       <TableCell colSpan={6} />
-//     </TableRow>
-//   )}
-
-
- {/* <TablePagination
-          colSpan={3}
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-          ActionsComponent={TablePaginationActionsWrapped}
-        /> */}

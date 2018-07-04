@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {publicArea, privateArea} = require('../../auth/authorisation');
+const { Authenticate, isClubOfficial } = require('../../auth/passport');
 const {player} = require('../../database/controllers/');
 
 const getPlayers = (req, res, next)=>{
@@ -34,11 +34,11 @@ router.use((req,res,next)=>{
     next()
 })
 
-router.get('/', publicArea, getPlayers);
-router.get('/:id', publicArea, getPlayer);
-router.post('/', privateArea, newPlayer);
-router.put('/:id', privateArea, replacePlayer);
-router.patch('/:id', privateArea, updatePlayer);
-router.delete('/:id', privateArea, deletePlayer);
+router.get('/', getPlayers);
+router.get('/:id', getPlayer);
+router.post('/', Authenticate, isClubOfficial, newPlayer);
+router.put('/:id', Authenticate, isClubOfficial, replacePlayer);
+router.patch('/:id', Authenticate, isClubOfficial, updatePlayer);
+router.delete('/:id', Authenticate, isClubOfficial, deletePlayer);
 
 module.exports = router;

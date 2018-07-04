@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import RegisterForm from '../RegisterForm'
-import {getStandard} from '../../utilities/fetch'
 
 class RegisterContainer extends Component {
     constructor(){

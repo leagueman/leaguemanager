@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Authenticate} = require('../../auth/passport');
+const { Authenticate, isLeagueSecretary } = require('../../auth/passport');
 const {club, user, team} = require('../../database/controllers');
 
 const getClubs = (req, res, next)=>{
@@ -54,11 +54,11 @@ router.use((req, res, next)=>{
 })
 
 router.get('/', getClubs);
-router.get('/:id', Authenticate, getClub);
+router.get('/:id', getClub);
 router.get('/:id/officials', getClubOfficials);
-router.post('/', Authenticate, newClub);
-router.put('/:id', Authenticate, replaceClub);
-router.patch('/:id', Authenticate, updateClub);
-router.delete('/:id', Authenticate, deleteClub);
+router.post('/', Authenticate, isLeagueSecretary, newClub);
+router.put('/:id', Authenticate, isLeagueSecretary, replaceClub);
+router.patch('/:id', Authenticate, isLeagueSecretary, updateClub);
+router.delete('/:id', Authenticate, isLeagueSecretary, deleteClub);
 
 module.exports = router;

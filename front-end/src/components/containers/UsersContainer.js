@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Users from '../Users'
-import { getStandard, getRequest} from '../../utilities/fetch'
+import { getStandard } from '../../utilities/fetch'
 class UsersContainer extends Component {
     state = {
         users:[]
     }
 
     componentDidMount(){
-        // FETCH
         fetch('http://localhost:9000/api/user', getStandard())            
         .then(res=>res.json())
         .then(users=>this.setState({users}))

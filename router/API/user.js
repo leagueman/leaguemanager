@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Authenticate, isAdmin } = require('../../auth/passport');
+const { Authenticate, isAdmin, isMe } = require('../../auth/passport');
 
 const {user} = require('../../database/controllers/');
 
@@ -50,15 +50,17 @@ router.use((req,res,next)=>{
     next()
 })
 
-router.get('/', Authenticate, isAdmin, getUsers);
-router.get('/:id', getUser);
-router.get('/setteam', setTeam);
 
-router.patch('/:id', updateUser);
+
+router.get('/', Authenticate, isAdmin, getUsers);
+router.get('/:id', Authenticate, isMe, getUser);
+router.get('/setteam', Authenticate, isMe, setTeam);
+
+router.patch('/:id', Authenticate, isMe, updateUser);
 
 //TO DO
-router.put('/:id', replaceUser);
-router.delete('/:id', deleteUser);
+router.put('/:id', Authenticate, isMe, replaceUser);
+router.delete('/:id', Authenticate, isMe, deleteUser);
 
 router.use((req, res, next)=>{
     res.json({});

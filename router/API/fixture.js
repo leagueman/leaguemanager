@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {publicArea, privateArea} = require('../../auth/authorisation');
+const { Authenticate, isLeagueSecretary } = require('../../auth/passport');
 const {fixture} = require('../../database/controllers/');
 
 const getFixtures = (req, res, next)=>{
@@ -38,18 +38,11 @@ router.use((req, res, next)=>{
     next()
 })
 
-router.get('/', publicArea, getFixtures);
-router.get('/:id', publicArea, getFixture);
-router.post('/', privateArea, newFixture);
-router.put('/:id', privateArea, replaceFixture);
-router.patch('/:id', privateArea, updateFixture);
-router.delete('/:id', privateArea, deleteFixture);
+router.get('/', getFixtures);
+router.get('/:id', getFixture);
+router.post('/', Authenticate, isLeagueSecretary, newFixture);
+router.put('/:id', Authenticate, isLeagueSecretary, replaceFixture);
+router.patch('/:id', Authenticate, isLeagueSecretary, updateFixture);
+router.delete('/:id', Authenticate, isLeagueSecretary, deleteFixture);
 
-// router.get('/:property/:value', (req, res, next, next)=>{
-//     if(!req.params.value) next()
-//     console.log("DYNAMIC ROUTE")
-//     fixture
-//     .getFixtures({[req.params.property]:req.params.value})
-//     .then(results=>res.json(results))
-// })
 module.exports = router;

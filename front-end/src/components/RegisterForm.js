@@ -17,7 +17,7 @@ import Typography from '@material-ui/core/Typography'
 import JSStyle from '../assets/jss/JSStyle'
 import { withStyles } from '@material-ui/core/styles'
 
-import {axios, getStandard, getRequest} from '../utilities/fetch'
+import { getStandard } from '../utilities/fetch'
 
 class RegisterForm extends React.Component {
     constructor(){
@@ -99,7 +99,7 @@ class RegisterForm extends React.Component {
        return true 
     }
     render() {
-        const {classes, loginError, loginErrorProblem } = this.props
+        const {classes} = this.props
         let organisations = this.state.organisations.map((org, key)=> <MenuItem value={org._id} key={key}>{org.title}</MenuItem>)
         let clubs = this.state.clubs.map((club, key)=> <MenuItem value={club._id} key={key}>{club.title}</MenuItem>)
         let teams = this.state.teams.map((team, key)=> <MenuItem value={team._id} key={key}>{team.title}</MenuItem>)

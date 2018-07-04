@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {publicArea, privateArea} = require('../../auth/authorisation');
+const { Authenticate, isAdmin } = require('../../auth/passport');
 const {table} = require('../../database/controllers/');
 
 const getTables = (req, res, next)=>{
@@ -16,35 +16,32 @@ const getTable = (req, res, next)=>{
         .catch(next)    
 }
 
+// const newTable = (req, res, next)=>{
+//     res.redirect('/')
+// }
 
+// const replaceTable = (req, res, next)=>{
+//     res.redirect('/')
+// }
 
+// const updateTable = (req, res, next)=>{
+//     res.redirect('/')
+// }
 
-const newTable = (req, res, next)=>{
-    res.redirect('/')
-}
-
-const replaceTable = (req, res, next)=>{
-    res.redirect('/')
-}
-
-const updateTable = (req, res, next)=>{
-    res.redirect('/')
-}
-
-const deleteTable = (req, res, next)=>{
-    res.redirect('/')
-}
+// const deleteTable = (req, res, next)=>{
+//     res.redirect('/')
+// }
 
 router.use((req,res,next)=>{
     console.log("Table route middleware stub")
     next()
 })
 
-router.get('/', publicArea, getTables);
-router.get('/:id', publicArea, getTable);
-router.post('/', privateArea, newTable);
-router.put('/:id', privateArea, replaceTable);
-router.patch('/:id', privateArea, updateTable);
-router.delete('/:id', privateArea, deleteTable);
+router.get('/', getTables);
+router.get('/:id', getTable);
+// router.post('/', privateArea, newTable);
+// router.put('/:id', privateArea, replaceTable);
+// router.patch('/:id', privateArea, updateTable);
+// router.delete('/:id', privateArea, deleteTable);
 
 module.exports = router;

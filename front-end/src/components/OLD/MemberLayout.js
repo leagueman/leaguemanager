@@ -4,32 +4,34 @@ import {Link} from 'react-router-dom'
 import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from '@material-ui/core/Typography'
 import JSStyle from '../../assets/jss/JSStyle'
-import routes from '../../routes/MemberRoutes'
+// import routes from '../../routes/MemberRoutes'
 import Sidebar from '../layout/SidebarLayout'
 import Header from '../layout/HeaderLayout'
 
 
-
-class Member extends Component {
+class MemberLayout extends Component {
     render() {
+        
         const Routes = (
             <Switch>
-              {routes.map((prop, key) => <Route path={prop.path} component={prop.component} key={key} exact={true} user={this.props.user}/> )}
+              {this.props.routes && this.props.routes.map((prop, key) => <Route path={prop.path} component={prop.component} key={key} exact={true}           /> )} 
             </Switch>
           );
 
         const { classes, ...rest } = this.props;
         return (
+            <Fragment>            
             <div className={classes.wrapper}> 
                 <Header title={"title"} />
-                <Sidebar routes={routes} />                
+                <Sidebar routes={this.props.routes} />                
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
                    {Routes}
                 </main> 
             </div>
+            </Fragment>
         );
     }
 }
 
-export default withStyles(JSStyle)(Member);
+export default withStyles(JSStyle)(MemberLayout);

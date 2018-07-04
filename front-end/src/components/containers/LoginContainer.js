@@ -39,32 +39,28 @@ class LoginContainer extends Component {
         })
         .then(res=>res.json())
         .then(res=>{
+            if(!res.success) throw(res.msg)
             setAuthorization(res.token);
             return res
         })
         .then(res=>{
-                res.redirectTo = '/'
-                if(res.user){
-                    if(res.user.isAdmin) res.redirectTo = '/admin'
-                    if(res.user.isClubOfficial) res.redirectTo = '/clubofficial'
-                    if(res.user.isLeagueSecretary) res.redirectTo = '/leaguesecretary'
-                    if(res.user.isReferee) res.redirectTo = '/referee'  //?
-                    if(res.user.isTeamManager) res.redirectTo = '/teammanager'  
-                    if(res.user.isMember) res.redirectTo = '/member'  
-                }
-                
-                this.props.onLogin(res)
-            // }
+            res.redirectTo = '/'
+            if(res.user){
+                if(res.user.isAdmin) res.redirectTo = '/admin'
+                if(res.user.isClubOfficial) res.redirectTo = '/clubofficial'
+                if(res.user.isLeagueSecretary) res.redirectTo = '/leaguesecretary'
+                if(res.user.isReferee) res.redirectTo = '/referee'  
+                if(res.user.isTeamManager) res.redirectTo = '/teammanager'  
+                if(res.user.isMember) res.redirectTo = '/member'  
+            }
+            
+            this.props.onLogin(res)
         })
-
-
+        .catch(err=>this.setError(true, err))
     }
 
 
     render() {
-        // console.log(this.state.token, this.state.redirectTo)
-        // if(this.state.token) return <Redirect to={this.state.redirectTo}/>
-        // else 
         return <LoginForm onError={this.setError.bind(this)} onLogin={this.onLogin.bind(this)} {...this.state} /> 
     }
 }

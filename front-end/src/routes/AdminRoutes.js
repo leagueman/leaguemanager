@@ -1,9 +1,10 @@
-import AdminLayout from "../components/layout/AdminLayout";
-import HomeLayout from "../components/layout/HomeLayout";
+import MainLayout from "../components/layout/MainLayout";
 import UsersContainer from "../components/containers/UsersContainer";
 import SendIcon from '@material-ui/icons/Send';
 import DraftsIcon from '@material-ui/icons/Drafts';
+import React from 'react'
 
+const Home = ()=><div>Admin</div>
 const Routes = [
     { 
         order:2,
@@ -19,7 +20,7 @@ const Routes = [
         icon: SendIcon,
         pageTitle: "Administration Dashboard",
         path: "/admin", 
-        component: AdminLayout 
+        component: Home  
     },
     {  
         order:0,
@@ -27,7 +28,7 @@ const Routes = [
         icon: SendIcon,
         pageTitle: "Homepage",
         path: "/", 
-        component: HomeLayout 
+        component: MainLayout 
     },
 ];
 

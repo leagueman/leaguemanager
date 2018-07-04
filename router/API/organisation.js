@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {publicArea, privateArea} = require('../../auth/authorisation');
+const { Authenticate, isAdmin } = require('../../auth/passport');
 const {organisation} = require('../../database/controllers/');
 
 const getOrganisations = (req, res, next)=>{
@@ -41,11 +41,11 @@ router.use((req, res, next)=>{
     next()
 })
 
-router.get('/', publicArea, getOrganisations);
-router.get('/:id', publicArea, getOrganisation);
-router.post('/', publicArea, newOrganisation);
-router.put('/:id', publicArea, replaceOrganisation);
-router.patch('/:id', publicArea, updateOrganisation);
-router.delete('/:id', publicArea, deleteOrganisation);
+router.get('/', getOrganisations);
+router.get('/:id', getOrganisation);
+router.post('/', Authenticate, isAdmin, newOrganisation);
+router.put('/:id', Authenticate, isAdmin, replaceOrganisation);
+router.patch('/:id', Authenticate, isAdmin, updateOrganisation);
+router.delete('/:id', Authenticate, isAdmin, deleteOrganisation);
 
 module.exports = router;

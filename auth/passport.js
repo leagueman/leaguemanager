@@ -38,21 +38,47 @@ const Passport = passport=> {
     }));
 }
 
+// CALLBACK SIGN IN
+// const signin = (req, res)=> {
+//     console.log("SIGNING IN ")
+//     User.findOne({ email: req.body.email }, (err, user)=> {
+//         console.log("USER ", user)
+//       if (err) throw err;
+//       if (!user) res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})
+//       else {
+//           console.log("NO ERRORS FINDING USER")
+//         user.comparePassword(req.body.password, (err, isMatch)=> {
+//             console.log("PASSWORDS MATCH", isMatch)
+//             user.password = ""
+//             if(err) res.status(401).send({success: false, msg: 'Authentication failed. There was an error'})
+//             else if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60} ), user:user} )
+//             else res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'})      
+//         });
+//       }
+//     });
+//   }
 
-const signin = (req, res)=> {
-    User.findOne({ email: req.body.email }, (err, user)=> {
-      if (err) throw err;
-      if (!user) res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})
-      else {
-        user.comparePassword(req.body.password, (err, isMatch)=> {
-            user.password = ""
-            if(err) res.status(401).send({success: false, msg: 'Authentication failed. There was an error'})
-            else if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60} ), user:user} )
-            else res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'})      
-        });
-      }
-    });
-  }
+// PROMISE SIGN IN
+  const signin = (req, res)=> {
+      console.log("SIGNING IN ")
+      User.findOne({ email: req.body.email })
+        .then(user=> {
+            console.log("USER ", user)
+            // if (err) throw err;
+            if (!user) res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})
+            else {
+                console.log("NO ERRORS FINDING USER")
+                user.comparePassword(req.body.password, (err, isMatch)=> {
+                    console.log("PASSWORDS MATCH", isMatch)
+                    user.password = ""
+                    //   if(err) res.status(401).send({success: false, msg: 'Authentication failed. There was an error'})
+                    if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60} ), user:user} )
+                    else res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'})      
+                });
+            }
+        })
+        .catch(err=>res.status(401).send({success: false, msg: err})  )
+    }
 
 const signup = (req, res)=> {
     // TO-DO ADD OTHER PROPERTIES HERE
@@ -75,10 +101,59 @@ const isAdmin = (req,res,next)=>{
 const isReferee = (req,res,next)=>{
     if(
         req.user.isReferee || 
-        req.user.Admin || 
-        req.user.LeagueSecretary 
+        req.user.isAdmin || 
+        req.user.isLeagueSecretary 
     ) next()
     else throw {message:"Not a Referee"}
+}
+
+const isLeagueSecretary = (req,res,next)=>{
+    if(
+        req.user.isAdmin || 
+        req.user.isLeagueSecretary 
+    ) next()
+    else throw {message:"Not a League Secretary"}
+}
+
+const isClubOfficial = (req,res,next)=>{
+    if(
+        req.user.isAdmin || 
+        req.user.isClubOfficial 
+    ) next()
+    else throw {message:"Not a Club Official"}
+}
+
+const isTeamManager = (req,res,next)=>{
+    if(
+        req.user.isAdmin || 
+        req.user.isTeamManager 
+    ) next()
+    else throw {message:"Not a Team Manager"}
+}
+
+const isMember = (req,res,next)=>{
+    if(
+        req.user.isAdmin || 
+        req.user.isMember 
+    ) next()
+    else throw {message:"Not a Member"}
+}
+
+const isMe = (req,res,next)=>{
+    if(
+        req.user.isAdmin || 
+        req.user._id === req.params.id 
+    ) next()
+    else throw {message:"Not a Member"}
+}
+
+const canUpdateScores =  (req,res,next)=>{
+    if(
+        req.user.isAdmin || 
+        req.user.isClubOfficial ||
+        req.user.isReferee
+    ) next()
+    else throw {message:"Not a Member"}
 }
 
 Passport(passport);
@@ -91,4 +166,11 @@ module.exports = {
     signup,
     isAdmin,
     isReferee,
+    isLeagueSecretary,
+    isTeamManager, 
+    isClubOfficial,
+    isMember,
+    isMe,
+    canUpdateScores,
+    
 }

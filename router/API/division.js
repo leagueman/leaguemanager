@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Authenticate} = require('../../auth/passport');
+const { Authenticate, isLeagueSecretary } = require('../../auth/passport');
 const {division, team} = require('../../database/controllers/');
 
 const getDivisions = (req, res, next)=>{
@@ -15,11 +15,6 @@ const getDivision = (req, res, next)=>{
         .then(data=>res.status(200).json(data))
         .catch(next)   
 }
-
-
-
-
-
 
 const newDivision = (req, res, next)=>{
     res.redirect('/')
@@ -50,12 +45,12 @@ router.use((req, res, next)=>{
 })
 
 router.get('/', getDivisions);
-router.get('/:id/newfixturelist', newFixtureList);
 router.get('/:id', getDivision);
-router.post('/', Authenticate, newDivision);
-router.put('/:id', Authenticate, replaceDivision);
-router.patch('/:id', Authenticate, updateDivision);
-router.delete('/:id', Authenticate, deleteDivision);
+router.get('/:id/newfixturelist', Authenticate, isLeagueSecretary, newFixtureList);
+router.post('/', Authenticate, isLeagueSecretary, newDivision);
+router.put('/:id', Authenticate, isLeagueSecretary, replaceDivision);
+router.patch('/:id', Authenticate, isLeagueSecretary, updateDivision);
+router.delete('/:id', Authenticate, isLeagueSecretary, deleteDivision);
 
 
 module.exports = router;

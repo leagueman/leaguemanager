@@ -8,8 +8,7 @@ import Button from '@material-ui/core/Button'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Snackbar from '@material-ui/core/Snackbar'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
-import Icon from '@material-ui/core/Icon'
+
 import JSStyle from '../assets/jss/JSStyle'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -19,8 +18,6 @@ class LoginForm extends Component {
         this.state = {
             email:"",
             password:"",
-            // SnackbarOpen:true,
-            // SnackbarMessage:"",
         }
     }
    
@@ -37,10 +34,6 @@ class LoginForm extends Component {
     handleSnackbarClose = ()=>{
         this.props.onError(false, '')
     }
-
-    // static getDerivedStateFromProps(nextProps, prevState){
-    //     return nextProps.loginError !== prevState.SnackbarOpen ?  {SnackbarOpen: nextProps.loginError, SnackbarMessage:nextProps.loginErrorProblem } : {}
-    // }
 
     showsnack = () =>{
         console.log("SNACK")

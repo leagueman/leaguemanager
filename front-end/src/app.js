@@ -1,7 +1,7 @@
 
 import React, { Fragment, Component } from "react";
 import { createBrowserHistory } from "history";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 
 import Routes from "./routes";
 import USER from './USER'
@@ -10,26 +10,12 @@ const hist = createBrowserHistory();
 
 const routes = Routes.map((prop, key) => <Route path={prop.path} component={prop.component} key={key} />)
 
-// const currentUser = {
-//   success:false,
-//   title:'',
-//   token: '',
-//   addUser: newUser=>{
-//     this.token = newUser.token
-//     console.log(this)
-//   }
-// }
-
-
 class App extends Component {
     constructor(){
         super()
 
-        this.addUser = (user, redirectTo)=>{
-            if(user.user && !user.user.title) user.user.title = "Richard"
-            this.setState({user}, ()=>{
-                // window.location.href = redirectTo
-            })
+        this.addUser = (user)=>{
+            this.setState({user})
         }
 
         this.state = {
@@ -42,9 +28,9 @@ class App extends Component {
             <Fragment>
                 <USER.Provider value={this.state}>
                 <Router history={hist}>   
-                <Switch>
-                    {routes}
-                </Switch>
+                    <Switch>
+                        {routes}
+                    </Switch>
                 </Router>
                 </USER.Provider>                
             </Fragment>
