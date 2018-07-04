@@ -19,9 +19,9 @@ class RegisterContainer extends Component {
         })
     }
 
-    async onRegister({title, email, password1, password2, organisation, club, team}){
+    onRegister({title, email, password1, password2, organisation, club, team}){
         this.setError(false, '')
-        let register = await fetch('http://localhost:9000/api/user/', 
+        fetch('http://localhost:9000/api/user/', 
         // TO-DO Make a standardPost object in utilities/fetch 
         {
             method: 'POST',

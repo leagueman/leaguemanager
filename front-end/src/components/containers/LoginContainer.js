@@ -22,10 +22,10 @@ class LoginContainer extends Component {
         })
     }
 
-    async onLogin(email, password){
+    onLogin(email, password){
         this.setError(false, '')
         if( !validateEmail( email ) ) return;
-        let response = await fetch('http://localhost:9000/api/signin',
+        fetch('http://localhost:9000/api/signin',
         // TO-DO Make a standardPost object in utilities/fetch  
         {
             method: 'POST',
