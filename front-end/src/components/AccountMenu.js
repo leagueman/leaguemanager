@@ -33,10 +33,10 @@ class AccountMenu extends Component {
         this.handleCloseMenu()
     }
     handleDialogYes = () =>{
-        this.handleCloseMenu
+        this.handleCloseMenu()
     }
     handleDialogNo = () =>{
-        this.handleCloseMenu
+        this.handleCloseMenu()
     }
     render() {
         const { classes, user } = this.props;

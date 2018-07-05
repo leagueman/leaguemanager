@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import {Route, Switch } from "react-router-dom";
+import Hidden from '@material-ui/core/Hidden';
+import Sidebar from '../layout/SidebarLayout'
+import Header from '../layout/HeaderLayout'
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import JSStyle from '../../assets/jss/JSStyle'
 import defaultRoutes from '../../routes/HomeRoutes'
-import Sidebar from '../layout/SidebarLayout'
-import Header from '../layout/HeaderLayout'
 
 
 class MainLayout extends Component {
@@ -16,7 +17,7 @@ class MainLayout extends Component {
         
         const Routes = (
             <Switch>
-              {routes && routes.map((prop, key) => <Route path={prop.path} component={prop.component} key={key} exact={true} /> )} 
+              {routes && routes.map((prop, key) => <Route path={prop.path+"/"} component={prop.component} key={key} exact={false} /> )} 
             </Switch>
           );
 
@@ -24,7 +25,9 @@ class MainLayout extends Component {
             <Fragment>            
             <div className={classes.wrapper}> 
                 <Header />
-                <Sidebar routes={routes} />                
+                <Hidden smDown>
+                    <Sidebar routes={routes} /> 
+                </Hidden>               
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
                    {Routes}

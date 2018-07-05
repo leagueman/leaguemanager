@@ -33,6 +33,7 @@ class RegisterForm extends React.Component {
             organisation:'',
             club:'',
             team:'',
+            secret:'',
         }
     }
   
@@ -71,7 +72,7 @@ class RegisterForm extends React.Component {
         if(this.state.password1.length<6){
             this.props.onError(true, "Password is too short. It must be at least 6 characters long")
             return false
-        }else if(this.state.password1 !== this.state.password2){
+        }else if(this.state.password1 !== this.state.password2 && this.state.password2!=='' && this.state.password1!==''){
             this.props.onError(true, "Passwords don't match")
             return false
         }
@@ -87,12 +88,12 @@ class RegisterForm extends React.Component {
     }
 
     validate = ()=>{
-        if(!this.checkPasswords()) return false
+       if(!this.checkPasswords()) return false
        if(!this.state.email.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)){
            this.props.onError(true, "Email Address not valid")
            return false
        } 
-       if(!this.state.title.match(/^[a-zA-Z]+$/)){
+       if(!this.state.title.match(/^[a-zA-Z ]+$/)){
            this.props.onError(true, "Name not valid")
            return false
        } 
@@ -214,6 +215,18 @@ class RegisterForm extends React.Component {
                                         {teams}
                                     </Select>
                                     </FormControl>
+                                   <TextField
+                                       id="secret"
+                                       name="secret"
+                                       label="Who's your favourite player?"
+                                       className={classes.textField}
+                                       type="text"
+                                       value={this.state.secret}
+                                       onChange={this.change}
+                                   />
+                                    <Typography variant="caption">
+                                        Please tell us your favourite all-time player. We will ask you this again if you forget your password.
+                                    </Typography>
 
                                </FormGroup>
                                 Already registered? <Button className={classes.button}>Log In</Button>

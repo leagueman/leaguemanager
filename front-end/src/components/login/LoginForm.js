@@ -9,6 +9,9 @@ import Button from '@material-ui/core/Button'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Snackbar from '@material-ui/core/Snackbar'
+import Switch from '@material-ui/core/Switch'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import {Link} from 'react-router-dom'
 
 import JSStyle from '../../assets/jss/JSStyle'
 import { withStyles } from '@material-ui/core/styles'
@@ -19,17 +22,21 @@ class LoginForm extends Component {
         this.state = {
             email:"",
             password:"",
+            rememberMe:false,
         }
     }
    
     changeEmail = (e)=>{
-        this.setState({email: e.currentTarget.value})
+        this.setState({email: e.target.value})
     }
     changePassword = (e)=>{
-        this.setState({password: e.currentTarget.value})
+        this.setState({password: e.target.value})
+    }
+    changeSwitch = (e)=>{
+        this.setState({rememberMe: e.target.checked})
     }
     onLogin = ()=>{
-        this.props.onLogin(this.state.email, this.state.password)
+        this.props.onLogin(this.state)
     }
 
     handleSnackbarClose = ()=>{
@@ -49,8 +56,8 @@ class LoginForm extends Component {
         
         return (     
             <Grid container spacing={32}>
-                <Grid item xs={2}></Grid>
-                <Grid item xs={12} sm={6}> 
+                <Grid item xs={12} sm={1} md={2} lg={3}></Grid>
+                <Grid item xs={12} sm={10} md={8} lg={6} > 
 
 
                    <Card>
@@ -87,11 +94,20 @@ class LoginForm extends Component {
                                        // margin="normal"
                                    />
                                </FormGroup>
-                                <Button className={classes.button}>Forgot Password</Button>
-                                <Button className={classes.button}>Register</Button>
+                                <FormControlLabel control={
+                                                            <Switch
+                                                                checked={this.state.rememberMe}
+                                                                onChange={this.changeSwitch}
+                                                                color="primary"
+                                                            />
+                                                        }
+                                    label="Stay logged in"
+                                />
+                                <Button className={classes.button} component={Link} to='/forgot' from={window.location.pathname}>Forgot Password</Button>
+                                <Button className={classes.button} component={Link} to='/register' from={window.location.pathname}>Register</Button>
                        </CardContent>
                        <CardActions className={classes.actions} disableActionSpacing>     
-                           <Button className={classes.button}>Cancel</Button>
+                           <Button className={classes.button} component={Link} to='/' from={window.location.pathname}>Cancel</Button>
                       
                            <Button variant="contained" color="primary" className={classes.signin} onClick={this.onLogin}>
                                Login
@@ -109,7 +125,7 @@ class LoginForm extends Component {
                     />      
 
                 </Grid>
-                <Grid item xs={2}></Grid>
+                <Grid item xs={12} sm={2} md={2} ></Grid>
             </Grid>
         );
     }

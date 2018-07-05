@@ -33,6 +33,7 @@
     "moment": "^2.22.2",
     "mongoose": "^5.1.5",
     "morgan": "^1.9.0",
+    "nodemailer": "^4.6.7",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "serve-favicon": "^2.5.0"

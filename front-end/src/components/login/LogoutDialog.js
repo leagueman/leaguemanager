@@ -1,15 +1,15 @@
-import React, {Fragment, Component} from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
+import React, {Fragment} from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
 
 const LogoutButton = (props)=>{
 
+    const logout = ()=>{
+        window.location.href = '/'
+    }
         return (
             <Fragment> 
                 <Dialog
@@ -22,7 +22,7 @@ const LogoutButton = (props)=>{
                     <Button onClick={props.onClose} color="primary">
                     No
                     </Button>
-                    <Button onClick={props.onClose} color="primary" autoFocus>
+                    <Button onClick={logout} color="primary" autoFocus>
                     Yes Logout
                     </Button>
                 </DialogActions>

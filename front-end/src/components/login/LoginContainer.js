@@ -4,6 +4,7 @@ import {validateEmail} from '../../utilities/validation'
 import {setAuthorization} from '../../utilities/fetch'
 import {typeOfUser} from '../../utilities/utils'
 
+
 class LoginContainer extends Component {
     constructor(){
         super()
@@ -23,7 +24,7 @@ class LoginContainer extends Component {
         })
     }
 
-    onLogin(email, password){
+    onLogin({email, password, rememberMe}){
         this.setError(false, '')
         if( !validateEmail( email ) ) return;
         fetch('http://localhost:9000/api/signin',
@@ -40,7 +41,10 @@ class LoginContainer extends Component {
         })
         .then(res=>res.json())
         .then(res=>{
-            if(!res.success) throw(res.msg)
+            if(!res.success) throw(res.message)
+            // TO-DO
+            // if( rememberMe ) // SAVE REMEMEBR ME TO LOCAL STORAGE AND LOAD IT ON THE APP COMPONENT WITH THE TOKEN;
+            // LOGOUT WILL THEN ALSO HAVE TO REMOVE THE LOCAL STORAGE
             setAuthorization(res.token);
             return res
         })
@@ -54,7 +58,7 @@ class LoginContainer extends Component {
 
 
     render() {
-        return <LoginForm onError={this.setError.bind(this)} onLogin={this.onLogin.bind(this)} {...this.state} /> 
+        return <LoginForm onError={this.setError.bind(this)} onLogin={this.onLogin.bind(this)} {...this.state} exact={true} />
     }
 }
 

@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom'
 
 const Sidebar = ({classes, routes})=>{
     const menuItems = routes
+        .filter(link=>link.order!==0)
         .sort((a,b)=>{
             if(a.order<b.order) return -1
             else return 1
@@ -29,6 +30,7 @@ const Sidebar = ({classes, routes})=>{
         </MenuItem>
     ))
     return(
+        
         <Drawer 
             variant="permanent"
             classes={{

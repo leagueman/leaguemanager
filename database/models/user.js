@@ -1,6 +1,6 @@
 const mongoose = require('../database');
 const {ObjectId} = mongoose.Schema.Types
-var bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 const Schema = new mongoose.Schema({
     title: String,
@@ -13,7 +13,7 @@ const Schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    jwt: String,
+    secret: String,
     last_signed_in: Date,
     isAdmin: Boolean,
     isClubOfficial: Boolean,
@@ -28,15 +28,16 @@ const Schema = new mongoose.Schema({
 Schema.pre('save', function(next) {
     var user = this;
     if (this.isModified('password') || this.isNew) {
-        let hashedPassword = bcrypt.hashSync(password1, 8);
+        let hashedPassword = bcrypt.hashSync(user.password, 8);
         user.password = hashedPassword;               
     } else {
         return next();
     }
+    next()
 });
+
 Schema.methods.comparePassword = function(password, cb) {   
     if(bcrypt.compareSync(password, this.password)) {
-        console.log("password", password)
         cb(null, true)
     }
     else throw cb(true, false)

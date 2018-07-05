@@ -19,13 +19,13 @@ class RegisterContainer extends Component {
         })
     }
 
-    onRegister({title, email, password1, password2, organisation, club, team}){
+    onRegister({title, email, password1, password2, organisation, club, team, secret}){
         this.setError(false, '')
-        fetch('http://localhost:9000/api/user/', 
+        fetch('http://localhost:9000/api/signup/', 
         // TO-DO Make a standardPost object in utilities/fetch 
         {
             method: 'POST',
-            body: JSON.stringify({title, email, password1, password2, organisation, club, team}),
+            body: JSON.stringify({title, email, password1, password2, organisation, club, team, secret}),
             headers: {
               'content-type': 'application/json'
             },
@@ -34,8 +34,8 @@ class RegisterContainer extends Component {
         })
         .then(res=>res.json())
         .then(res=>{console.log(res);return res;})
-        .then(res=>this.logIn(res))
-       
+        // .then(res=>this.logIn(res))
+        .catch(err=>console.log(err))
         // if(register.error){ 
         //     this.setError(true, register.message)
         // }else{

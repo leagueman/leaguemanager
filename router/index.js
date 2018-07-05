@@ -10,7 +10,7 @@ router.use('/api', router_api);
 
   
 router.get('/test', Authenticate, function(req, res) {    
-  res.json({success: true, msg: 'Got the test page'});
+  res.json({success: true, message: 'Got the test page'});
 });
 
 // router.use('/', router_view);

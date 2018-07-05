@@ -1,5 +1,6 @@
 import MyClubLayout from '../components/containers/MyClub'
 import LoginLayout from "../components/login/LoginLayout";
+import ForgotPassword from "../components/login/ForgotPassword";
 import RegisterLayout from "../components/register/RegisterLayout";
 
 const Home = ()=>null
@@ -19,7 +20,14 @@ const Routes = [
         component: LoginLayout 
     },
     { 
-        order:2,
+        order:0,
+        link: "Forgot",
+        pageTitle: "Forgot",
+        path: "/forgot", 
+        component: ForgotPassword 
+    },
+    { 
+        order:0,
         link: "My Club",
         pageTitle: "My Club",
         path: "/myclub", 

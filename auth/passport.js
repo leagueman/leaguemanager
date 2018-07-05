@@ -1,9 +1,21 @@
 const JwtStrategy = require('passport-jwt').Strategy
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+var bcrypt = require('bcryptjs');
 
 const User = require('../database/models/user');
 
+const emailer = require('../methods/emailer')
+
+const generatePassword = ()=>{
+    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    let pw = ''
+    while(pw.length<8){
+        let x = Math.round(Math.random()*characters.length)
+        pw+=characters.charAt(x)
+    }
+    return pw
+}
 
 const getToken = r=> {
     if(r.cookies.token) return r.cookies.token
@@ -38,58 +50,69 @@ const Passport = passport=> {
     }));
 }
 
-// CALLBACK SIGN IN
-// const signin = (req, res)=> {
-//     console.log("SIGNING IN ")
-//     User.findOne({ email: req.body.email }, (err, user)=> {
-//         console.log("USER ", user)
-//       if (err) throw err;
-//       if (!user) res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})
-//       else {
-//           console.log("NO ERRORS FINDING USER")
-//         user.comparePassword(req.body.password, (err, isMatch)=> {
-//             console.log("PASSWORDS MATCH", isMatch)
-//             user.password = ""
-//             if(err) res.status(401).send({success: false, msg: 'Authentication failed. There was an error'})
-//             else if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60} ), user:user} )
-//             else res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'})      
-//         });
-//       }
-//     });
-//   }
-
-// PROMISE SIGN IN
-  const signin = (req, res)=> {
-      console.log("SIGNING IN ")
-      User.findOne({ email: req.body.email })
-        .then(user=> {
-            console.log("USER ", user)
-            if (!user) throw 'Authentication failed. User not found.'
-            else {
-                console.log("NO ERRORS FINDING USER")
-                user.comparePassword(req.body.password, (err, isMatch)=> {
-                    console.log("PASSWORDS MATCH", isMatch)
-                    user.password = ""
-                    if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60} ), user:user} )
-                    else throw 'Authentication failed. Wrong password.'      
-                });
-            }
-        })
-        .catch(err=>res.status(401).send({success: false, msg: err})  )
-    }
+const signin = (req, res)=> {
+    console.log("SIGNING IN ")
+    User.findOne({ email: req.body.email })
+    .then(user=> {
+        console.log("USER ", user)
+        if (!user) throw 'Authentication failed. User not found.'
+        else {
+            console.log("NO ERRORS FINDING USER")
+            user.comparePassword(req.body.password, (err, isMatch)=> {
+                console.log("PASSWORDS MATCH", isMatch)
+                user.password = ""
+                if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60} ), user:user} )
+                else throw 'Authentication failed. Wrong password.'      
+            });
+        }
+    })
+    .catch(err=>res.status(401).send({success: false, message: err})  )
+}
 
 const signup = (req, res)=> {
-    // TO-DO ADD OTHER PROPERTIES HERE
-    var newUser = new User({
-      email: req.body.email,
-      password: req.body.password,
-    });
+    req.body.password = req.body.password1===req.body.password2 ? req.body.password1 : ''
+    var newUser = new User(req.body);
+    console.log(newUser)
     newUser.save(err=> {
-      if(err) return res.json({success: false, msg: 'Username already exists.'});
-      res.json({success: true, msg: 'Successful created new user.'});
+        console.log('SAVED')
+      if(err) return res.json({success: false, message: err});
+      res.json({success: true, message: 'Successful created new user.'});
     });
   
 }
+
+const forgotpassword = (req, res)=> {
+    console.log("Starting forgotten password routine")
+    let new_password = generatePassword()
+    let hashedPassword = bcrypt.hashSync(new_password, 8);
+
+    User.findOneAndUpdate({ email: req.body.email}, { $set: { password: hashedPassword }}, {new:true},  (err, user)=>{ 
+        console.log(user.secret, req.body.secret, user.secret===req.body.secret)          
+        if(err) res.status(401).send({success: false, message: 'Something went wrong'})
+        else if(!user) res.status(401).send({success: false, message: 'Email address not found'}) 
+        else if(user.secret!==req.body.secret) res.status(401).send({success: false, message:'You answered the question wrong'}) 
+        else{
+            let message = {
+                from: 'no-reply@leaguemanager.com',
+                to: user.email,
+                subject: 'Your password has been reset',
+                text: `Your new password is... ${new_password}`,
+                html: `<h2>Your new password...</h2>
+                    <h4>Here\'s your new password</h4>
+                    <h1>${new_password}</h1>`,
+            };
+
+            emailer.transporter.sendMail(message)
+            .then(data=>{
+                console.log("EMAIL SEEMS TO HAVE SENT")
+                let emailLink = 'https://ethereal.email/message/'+ data.response.split('MSGID=')[1].split('').reverse().slice(1).reverse().join('')
+                res.status(200).json( {success: true, message:'An email has been sent to the provided email address with a new password.', link:emailLink} )
+            })
+            .catch(err=>console.log("ERROR", err))
+        }
+    })
+}
+
 
 const isAdmin = (req,res,next)=>{
     if(req.user.isAdmin) next()
@@ -162,6 +185,7 @@ module.exports = {
     getToken,
     signin,
     signup,
+    forgotpassword,
     isAdmin,
     isReferee,
     isLeagueSecretary,
