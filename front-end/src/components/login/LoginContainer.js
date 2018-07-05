@@ -3,7 +3,7 @@ import LoginForm from './LoginForm'
 import {validateEmail} from '../../utilities/validation'
 import {setAuthorization} from '../../utilities/fetch'
 import {typeOfUser} from '../../utilities/utils'
-
+import ls from '../../utilities/localStorage'
 
 class LoginContainer extends Component {
     constructor(){
@@ -42,15 +42,15 @@ class LoginContainer extends Component {
         .then(res=>res.json())
         .then(res=>{
             if(!res.success) throw(res.message)
-            // TO-DO
-            // if( rememberMe ) // SAVE REMEMEBR ME TO LOCAL STORAGE AND LOAD IT ON THE APP COMPONENT WITH THE TOKEN;
-            // LOGOUT WILL THEN ALSO HAVE TO REMOVE THE LOCAL STORAGE
             setAuthorization(res.token);
             return res
         })
         .then(res=>{
             let type_of_user = res.user && typeOfUser(res.user)
             res.redirectTo = type_of_user ? '/'+(type_of_user.substring(2,type_of_user.length)).toLowerCase() : '/'
+
+            // IF rememberMe is ticked - SAVE THE LOGIN RESPONSE TO LOCALSTORAGE
+            rememberMe ? ls.set(res) : ls.clear()
             this.props.onLogin(res)
         })
         .catch(err=>this.setError(true, err))

@@ -3,12 +3,14 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
+import ls from '../../utilities/localStorage'
 
 
 const LogoutButton = (props)=>{
 
     const logout = ()=>{
         window.location.href = '/'
+        ls.clear()
     }
         return (
             <Fragment> 

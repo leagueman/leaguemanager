@@ -2,6 +2,8 @@
 import React, { Fragment, Component } from "react";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
+import ls from './utilities/localStorage'
+import {setAuthorization} from './utilities/fetch'
 
 import Routes from "./routes";
 import USER from './USER'
@@ -19,11 +21,19 @@ class App extends Component {
         }
 
         this.state = {
-            user:{},
+            user: {
+                success: ls.get('success'),
+                user:ls.get('user'),
+                token:ls.get('token'),
+                redirectTo: ls.get('redirectTo')
+            } || {},
             newUser:this.addUser
         }
+        ls.get('token') && setAuthorization(ls.get('token'))
     }
+
     render() {
+        console.log(this.state.user)
         return (
             <Fragment>
                 <USER.Provider value={this.state}>

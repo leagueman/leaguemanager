@@ -10,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Snackbar from '@material-ui/core/Snackbar'
 import Switch from '@material-ui/core/Switch'
+import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {Link} from 'react-router-dom'
 
@@ -95,11 +96,13 @@ class LoginForm extends Component {
                                    />
                                </FormGroup>
                                 <FormControlLabel control={
+                                                        <Tooltip id="tooltip-icon" title="Your password will be saved on this device">
                                                             <Switch
                                                                 checked={this.state.rememberMe}
                                                                 onChange={this.changeSwitch}
                                                                 color="primary"
                                                             />
+                                                        </Tooltip>
                                                         }
                                     label="Stay logged in"
                                 />
