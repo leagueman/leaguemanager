@@ -1,15 +1,13 @@
 import React, { Component, Fragment } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import {IconButton,Typography,Menu,MenuItem} from '@material-ui/core';
+
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom'
-import LogoutDialog from './login/LogoutDialog'
+import LogoutDialog from '../login/LogoutDialog'
 import { withStyles } from '@material-ui/core/styles'
-import JSStyle from '../assets/jss/JSStyle'
+import JSStyle from '../../assets/jss/JSStyle'
 
-import {typeOfUser} from '../utilities/utils'
+import {typeOfUser} from '../../utilities/utils'
 
 class AccountMenu extends Component { 
     state = {

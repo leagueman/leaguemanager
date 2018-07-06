@@ -1,12 +1,8 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles';
 import JSStyle from '../../assets/jss/JSStyle'
-import Drawer from '@material-ui/core/Drawer'
-import List from '@material-ui/core/List';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+
+import {Drawer,List,MenuList,MenuItem,ListItemIcon,ListItemText} from '@material-ui/core'
 
 import SendIcon from '@material-ui/icons/Send';
 import Divider from '@material-ui/core/Divider';

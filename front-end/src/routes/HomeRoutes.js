@@ -1,7 +1,7 @@
 import MyClubLayout from '../components/containers/MyClub'
 import LoginLayout from "../components/login/LoginLayout";
 import ForgotPassword from "../components/login/ForgotPassword";
-import RegisterLayout from "../components/register/RegisterLayout";
+import RegisterContainer from "../components/register/RegisterContainer";
 
 const Home = ()=>null
 const Routes = [
@@ -10,7 +10,7 @@ const Routes = [
         link: "Register",
         pageTitle: "Register",
         path: "/register", 
-        component: RegisterLayout 
+        component: RegisterContainer 
     },
     { 
         order:5,

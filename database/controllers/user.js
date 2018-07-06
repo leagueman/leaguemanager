@@ -87,5 +87,11 @@ module.exports = {
             .then(data=>data)
             .catch(err=>console.log({error:true, message:err}))
     ),
-    
+    updateUser: (id, newUser)=>{
+        delete newUser.password
+        user   
+            .findByIdAndUpdate(id, newUser,{new:true})
+            .then(data=> data)
+            .catch(err=>console.log({error:true, message:err}))
+    },
 }

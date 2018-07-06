@@ -1,6 +1,8 @@
 import SendIcon from '@material-ui/icons/Send';
 import DraftsIcon from '@material-ui/icons/Drafts';
 
+import Competitions from '../components/competitions/CompetitionsPanel'
+
 const Fixtures = ()=>{return null}
 const Results = ()=>{return null}
 const Teams = ()=>{return null}
@@ -9,7 +11,7 @@ const Players = ()=>{return null}
 const Users = ()=>{return null}
 const Referees = ()=>{return null}
 const Venues = ()=>{return null}
-const Competitions = ()=>{return null}
+// const Competitions = ()=>{return null}
 const Clubs = ()=>{return null}
 
 

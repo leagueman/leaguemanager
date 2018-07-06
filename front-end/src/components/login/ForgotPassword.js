@@ -1,15 +1,5 @@
 import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
-import FormGroup from '@material-ui/core/FormGroup'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
-import Snackbar from '@material-ui/core/Snackbar'
-import Typography from '@material-ui/core/Typography'
+import {Grid,TextField,FormGroup,Card,CardHeader,Avatar,Button,CardContent,CardActions,Snackbar,Typography} from '@material-ui/core'
 import {Link} from 'react-router-dom'
 
 import JSStyle from '../../assets/jss/JSStyle'

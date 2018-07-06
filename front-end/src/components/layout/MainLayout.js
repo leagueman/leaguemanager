@@ -14,7 +14,6 @@ class MainLayout extends Component {
         const {classes } = this.props; 
         let routes = this.props.routes || defaultRoutes
 
-        
         const Routes = (
             <Switch>
               {routes && routes.map((prop, key) => <Route path={prop.path+"/"} component={prop.component} key={key} exact={false} /> )} 

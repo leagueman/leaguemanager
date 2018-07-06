@@ -14,6 +14,7 @@ module.exports = {
         referee
             .find(criteria)
             .populate({ path: 'organisation' })
+            .populate({ path: 'user' })
             .then(data=>data)
             .catch(err=>console.log({error:true, message:"Error getting referees"}))
     ),

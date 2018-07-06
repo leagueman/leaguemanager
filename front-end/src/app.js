@@ -33,7 +33,6 @@ class App extends Component {
     }
 
     render() {
-        console.log(this.state.user)
         return (
             <Fragment>
                 <USER.Provider value={this.state}>

@@ -43,7 +43,7 @@ router.use((req, res, next)=>{
 
 router.get('/', getOrganisations);
 router.get('/:id', getOrganisation);
-router.post('/', Authenticate, isAdmin, newOrganisation);
+router.post('/', Authenticate, newOrganisation);
 router.put('/:id', Authenticate, isAdmin, replaceOrganisation);
 router.patch('/:id', Authenticate, isAdmin, updateOrganisation);
 router.delete('/:id', Authenticate, isAdmin, deleteOrganisation);

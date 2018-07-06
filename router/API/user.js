@@ -22,9 +22,9 @@ const getUser = (req, res, next)=>{
 
 const updateUser = (req, res, next)=>{
     user
-        .updateUser(req.user._id, req.body)
-        .then(data=>res.status(200).json(data))
-        .catch(next)   
+        .updateUser(req.params.id, req.body.user)
+        // .then(data=>res.status(200).json(data))
+        // .catch(next)   
 }
 
 
@@ -56,10 +56,10 @@ router.get('/', Authenticate, isAdmin, getUsers);
 router.get('/:id', Authenticate, isMe, getUser);
 router.get('/setteam', Authenticate, isMe, setTeam);
 
-router.patch('/:id', Authenticate, isMe, updateUser);
+router.put('/:id', Authenticate, isMe, updateUser);
+router.patch('/:id', Authenticate, isMe, replaceUser);
 
 //TO DO
-router.put('/:id', Authenticate, isMe, replaceUser);
 router.delete('/:id', Authenticate, isMe, deleteUser);
 
 router.use((req, res, next)=>{

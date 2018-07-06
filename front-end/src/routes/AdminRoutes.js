@@ -1,5 +1,9 @@
 import MainLayout from "../components/layout/MainLayout";
-import UsersContainer from "../components/containers/UsersContainer";
+import LoadList from '../components/HOC/LoadList'
+
+import Organisations from "../components/organisation/Organisations";
+import Users from "../components/users/Users";
+
 import SendIcon from '@material-ui/icons/Send';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import React from 'react'
@@ -7,12 +11,20 @@ import React from 'react'
 const Home = ()=><div>Admin</div>
 const Routes = [
     { 
+        order:3,
+        link: "Organisations",
+        icon: DraftsIcon,
+        pageTitle: "Organisations",
+        path: "/admin/organisations", 
+        component: LoadList('organisation')(Organisations), 
+    },
+    { 
         order:2,
         link: "Users",
         icon: DraftsIcon,
         pageTitle: "Users",
         path: "/admin/users", 
-        component: UsersContainer 
+        component: LoadList('user')(Users), 
     },
     {  
         order:1,
