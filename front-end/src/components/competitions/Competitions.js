@@ -11,6 +11,7 @@ import CompetitionNewDialog from './CompetitionNewDialog';
 import CompetitionButton from './CompetitionButton';
 import LeagueContainer from '../leagues/LeagueContainer';
 import CupContainer from '../cups/CupContainer';
+import NewLeague from '../leagues/NewLeague';
 
 // import injectUser from '../../USER'
 
@@ -35,9 +36,10 @@ class Competitions extends React.Component {
         super(props)
         this.state = {
             newCompetitionDialogOpen:false,
+            isNewCompetition:false,
             competitions:[],
             competition : null,
-            competition_title: ''
+            competition_title: '',
         }
     }
     
@@ -72,8 +74,7 @@ class Competitions extends React.Component {
             .then(res=>{
                 let competitions = [...this.state.competitions]
                 competitions.push(res)         
-                this.setState({competitions, competition:(competitions.length-1), competition_title:res.title})                
-                return newCompetition
+                this.setState({competitions, competition:(competitions.length-1), competition_title:res.title, isNewCompetition:true})                
             })
             .catch(err=>console.log(err))
     }
@@ -95,7 +96,7 @@ class Competitions extends React.Component {
 
     render() {
         let {classes} = this.props
-        let {competition, competitions} = this.state
+        let {competition, competitions,isNewCompetition} = this.state
 
         let competitionsMenuItems =  competitions.map((competition, key)=>(
             <MenuItem key={key} 
@@ -109,7 +110,7 @@ class Competitions extends React.Component {
         return (
             <div className={classes.root}>
                 <AppBar position="static" color="default">
-                    <Toolbar>
+                    <Toolbar alignItems="flex-end">
                         <Button onClick={this.handleOpenMenu} variant="fab" mini color="primary">
                             <ArrowDropDown/>
                         </Button>
@@ -139,8 +140,9 @@ class Competitions extends React.Component {
                 
                 <Grid container>
                     <Grid item>   
-                        { competitionType==='league' && <LeagueContainer competition={competitions[competition]._id} league={competitions[competition].league} {...this.props}/> }
-                        { competitionType==='cup' && <CupContainer competition={competitions[competition]}  {...this.props}/> }
+                        { isNewCompetition && competitionType==='league' && <NewLeague competition={competitions[competition]._id} {...this.props}/> }
+                        { !isNewCompetition && competitionType==='league' && <LeagueContainer competition={competitions[competition]._id} {...this.props}/> }
+                        { !isNewCompetition && competitionType==='cup' && <CupContainer competition={competitions[competition]}  {...this.props}/> }
                     </Grid>
                 </Grid>
             </div>

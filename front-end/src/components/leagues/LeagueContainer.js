@@ -6,12 +6,12 @@ class LeagueContainer extends Component {
     constructor(props){
         super(props)
         this.state = { 
-            league:this.props.league 
+            league:null 
         }
     }
 
     componentDidMount(){
-        if(!this.props.league) this.getData()
+        this.getData()
     }
 
     componentWillUpdate(nextProps, nextState){

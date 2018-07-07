@@ -2,9 +2,17 @@ import MyClubLayout from '../components/containers/MyClub'
 import LoginLayout from "../components/login/LoginLayout";
 import ForgotPassword from "../components/login/ForgotPassword";
 import RegisterContainer from "../components/register/RegisterContainer";
+import NewLeague from '../components/leagues/NewLeague';
 
 const Home = ()=>null
 const Routes = [
+    { 
+        order:5,
+        link: "New League",
+        pageTitle: "Register",
+        path: "/newleague", 
+        component: NewLeague 
+    },
     { 
         order:4,
         link: "Register",
