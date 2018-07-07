@@ -5,7 +5,7 @@ const {division, team} = require('../../database/controllers/');
 
 const getDivisions = (req, res, next)=>{
     division
-        .getDivisions()
+        .getDivisions(req.query || {})
         .then(data=>res.status(200).json(data))
         .catch(next)    
 }

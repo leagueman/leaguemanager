@@ -16,7 +16,7 @@ const Routes = [
         icon: DraftsIcon,
         pageTitle: "Organisations",
         path: "/admin/organisations", 
-        component: LoadList('organisation')(Organisations), 
+        component:Organisations, 
     },
     { 
         order:2,
@@ -34,14 +34,14 @@ const Routes = [
         path: "/admin", 
         component: Home  
     },
-    {  
-        order:0,
-        link: "Home",
-        icon: SendIcon,
-        pageTitle: "Homepage",
-        path: "/", 
-        component: MainLayout 
-    },
+    // {  
+    //     order:0,
+    //     link: "Home",
+    //     icon: SendIcon,
+    //     pageTitle: "Homepage",
+    //     path: "/", 
+    //     component: MainLayout 
+    // },
 ];
 
 export default Routes;

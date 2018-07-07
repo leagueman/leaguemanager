@@ -5,7 +5,7 @@ const {competition, league, division} = require('../../database/controllers/');
 
 const getCompetitions = (req, res, next)=>{
     competition
-        .getCompetitions({})
+        .getCompetitions(req.query || {})
         .then(data=>res.status(200).json(data))
         .catch(next)    
 }

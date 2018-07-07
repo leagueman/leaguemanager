@@ -15,7 +15,7 @@ const getHeaders = ()=>(
 )
 
 export const getStandard = ()=>(
-    Object.assign(
+    Object.assign({},
         standard, 
         {
             headers: getHeaders(),
@@ -24,17 +24,25 @@ export const getStandard = ()=>(
 )
 
 export const getRequest = body=>(
-    Object.assign(
+    Object.assign({},
         standard, 
         {
             headers: getHeaders(),
-            body: body,
+            body: JSON.stringify(body),
         }
     )
 )
 
+export const fetchQuery = (url,params)=>{
+    url = new URL(url)
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+    return fetch(url, getStandard())
+}
+
+
+
 export const post = content=>(
-    Object.assign(
+    Object.assign({},
         standard, 
         {
             method: 'POST',
@@ -45,7 +53,7 @@ export const post = content=>(
 )
 
 export const put = content=>(
-    Object.assign(
+    Object.assign({},
         standard, 
         {
             method: 'PUT',

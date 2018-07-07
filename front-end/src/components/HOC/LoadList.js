@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getRequest } from '../../utilities/fetch'
+import { fetchQuery } from '../../utilities/fetch'
 
 export const LoadList = (api_route='', query={}) => (Child)=>{
     return class Container extends Component {
@@ -8,7 +8,7 @@ export const LoadList = (api_route='', query={}) => (Child)=>{
         }
     
         componentDidMount(){
-            fetch('http://localhost:9000/api/'+api_route, getRequest(query))            
+            fetchQuery('http://localhost:9000/api/'+api_route,query)            
             .then(res=>res.json())
             .then(list=>this.setState({list}))
             .catch(err=>console.log(err))
@@ -18,6 +18,6 @@ export const LoadList = (api_route='', query={}) => (Child)=>{
             return (<Child list={this.state.list} {...this.props}/>);
         }
     }
-}
+}    
 
 export default LoadList

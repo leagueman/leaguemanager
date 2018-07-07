@@ -18,8 +18,8 @@ const styles = theme=> ({
   });
 
 const UsersPanel = (props) => {
-    let {classes, users=[]} = props
-    let userList = users
+    let {classes, list=[]} = props
+    let userList = list
                         .sort((a,b)=>{
                             if(a.title>b.title) return 1
                             else return -1

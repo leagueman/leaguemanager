@@ -1,6 +1,6 @@
 import React from 'react'
 import Organisation from './Organisation'
-import { post } from '../../utilities/fetch'
+import { post, getStandard} from '../../utilities/fetch'
 
 import { AppBar, Toolbar,Button,Menu,MenuItem,Typography,Grid } from '@material-ui/core';
 
@@ -29,7 +29,7 @@ class Organisations extends React.Component {
         this.state = {
             anchorEl:null,
             newOrganisationDialogOpen:false,
-            organisations: props.list || [],
+            organisations: [],
             organisation:null,
         }
     }
@@ -54,8 +54,7 @@ class Organisations extends React.Component {
         this.handleCloseMenu()
     }
     saveNewOrganisation=(title)=>{
-        this.closeNewOrganisationDialog()
-        
+        this.closeNewOrganisationDialog()        
         fetch('http://localhost:9000/api/organisation', post({title}))            
         .then(res=>res.json())
         .then(newOrganisation=>{
@@ -65,9 +64,13 @@ class Organisations extends React.Component {
         })
         .catch(err=>console.log(err))
     }
-    componentDidUpdate(prevProps, prevState){
-        if(prevState.organisations.length < this.props.list.length) this.setState({organisations:this.props.list})
+    componentDidMount(){
+        fetch('http://localhost:9000/api/organisation', getStandard())            
+        .then(res=>res.json())
+        .then(organisations=>this.setState({organisations}))
+        .catch(err=>console.log(err))   
     }
+
     render() {
         let {classes} = this.props
         let organisations = this.state.organisations.map((org, key)=> <MenuItem key={key} onClick={e=>this.chooseOrganisation(e, org._id, org.title)} >{org.title}</MenuItem>)

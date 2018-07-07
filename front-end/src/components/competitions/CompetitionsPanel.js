@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
-import {MoreVert, Favorite,Share } from '@material-ui/icons';
+import {MoreVert, Favorite,Share, Add } from '@material-ui/icons';
 import { Card, CardContent, CardActions, CardHeader, Avatar, IconButton, ListItem, ListItemText, List } from '@material-ui/core';
+
+
 import { withStyles } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 
@@ -52,11 +54,14 @@ const CompetitionsPanel = (props) => {
                     </List>
                 </CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
-                    <IconButton aria-label="Add to favorites">
+                    <IconButton>
                         <Favorite />
                     </IconButton>
-                    <IconButton aria-label="Share">
+                    <IconButton>
                         <Share />
+                    </IconButton>
+                    <IconButton>
+                        <Add />
                     </IconButton>
                 
                 </CardActions>

@@ -1,7 +1,10 @@
+import React from 'react'
 import SendIcon from '@material-ui/icons/Send';
 import DraftsIcon from '@material-ui/icons/Drafts';
 
-import Competitions from '../components/competitions/CompetitionsPanel'
+import USER from '../USER'
+
+import Competitions from '../components/competitions/Competitions'
 
 const Fixtures = ()=>{return null}
 const Results = ()=>{return null}
@@ -13,6 +16,15 @@ const Referees = ()=>{return null}
 const Venues = ()=>{return null}
 // const Competitions = ()=>{return null}
 const Clubs = ()=>{return null}
+
+
+export const injectUser = Component=> props=> {
+    return(
+        <USER.Consumer>
+            { ( {user} )=><Component user={user.user} {...props} />}
+        </USER.Consumer>
+    )
+}
 
 
 const Routes = [
@@ -38,7 +50,8 @@ const Routes = [
         icon: DraftsIcon,
         pageTitle: "Competitions",
         path: "/leaguesecretary/competitions", 
-        component: Competitions
+        // component: Competitions
+        component: injectUser(Competitions)
     },
     { 
         order:8,

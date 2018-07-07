@@ -40,7 +40,7 @@ class AccountMenu extends Component {
         const { classes, user } = this.props;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
-        console.log(typeOfUser(user.user))
+
         return (
             
             <Fragment>
