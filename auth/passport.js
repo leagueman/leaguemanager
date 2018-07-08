@@ -61,7 +61,7 @@ const signin = (req, res)=> {
             user.comparePassword(req.body.password, (err, isMatch)=> {
                 console.log("PASSWORDS MATCH", isMatch)
                 user.password = ""
-                if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60} ), user:user} )
+                if(isMatch) res.status(200).json( {success: true, token:jwt.sign( {data:user}, process.env.SECRET_CODE, {expiresIn:60*60} ), user:user} )
                 else throw 'Authentication failed. Wrong password.'      
             });
         }

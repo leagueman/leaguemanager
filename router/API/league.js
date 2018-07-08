@@ -18,10 +18,11 @@ const getLeague = (req, res, next)=>{
 }
 
 const newLeague = (req, res, next)=>{
-    league 
-        .newLeague(req.body)
-        .then(data=>res.status(200).json(data))
-        .catch(next)    
+    console.log(req.body)
+    // league 
+    //     .newLeague(req.body)
+    //     .then(data=>res.status(200).json(data))
+    //     .catch(next)    
 }
 
 const replaceLeague = (req, res, next)=>{

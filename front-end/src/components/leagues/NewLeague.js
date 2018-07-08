@@ -57,7 +57,13 @@ class NewLeague extends Component {
     onSaveLeague=()=>{
         this.setState({loader:true})
 
-        fetch('http://localhost:9000/api/league',post(this.state.divisionsObject))
+        let league = {
+            competition:this.props.competition._id,
+            league: this.props.competition.league._id,
+            divisions:this.state.divisionsObject
+        }
+        
+        fetch('http://localhost:9000/api/league',post(league))
             .then(res=>res.json())
             .then(res=>{
                 console.log(res)

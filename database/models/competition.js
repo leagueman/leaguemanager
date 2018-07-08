@@ -7,7 +7,7 @@ const Schema = new mongoose.Schema({
     category: String,
     organisation: {type: ObjectId, ref: 'organistaion'},
     league:  {type: ObjectId, ref: 'league'},
-    cup:  {type: ObjectId, ref: 'league'},
+    cup:  {type: ObjectId, ref: 'cup'},
     // fixtures:  [{type: ObjectId, ref: 'fixture'}],
 })
 

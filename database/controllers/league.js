@@ -27,16 +27,11 @@ module.exports = {
             .catch(err=>console.log({error:true, message:err}))
     ),
 
-    newLeague: ({title, competition, promoted_teams, relegated_teams})=>(
-        new league({
-                    title, 
-                    competition,
-                    promoted_teams,
-                    relegated_teams,
-                })
+    newLeague: (body)=>(
+        new league(body)
                 .save()
                 .then(result=>result)
-                .catch(err=>console.log({error:true, message:"Error creating team"}))
+                .catch(err=>console.error(err))
     ),
 
 }

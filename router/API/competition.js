@@ -18,40 +18,27 @@ const getCompetition = (req, res, next)=>{
 }
 
 // TO-DO - MOVE THIS LOGIC TO THE CONTROLLER 
+// let divisions = []
+// for(let i=1; i<=req.body.divisions; i++){
+//     let division_details = {
+//         title : "Division "+ String.fromCharCode(64+i),
+//         rank: i,
+//         league: new_league._id
+//     }
+//     divisions.push(division.newDivision(division_details))
+// }
+// Promise.all(divisions).then(new_divisions=>{
+//     new_competition.league.divisions = new_divisions
+//     res.status(200).json(new_competition)
+// })
+// .catch(err=>res.status(500).json({error:true, message:"Error creating divisions"}))     
+
+
 const newCompetition = (req, res, next)=>{
     competition
         .newCompetition(req.body)
-        .then(new_competition=>{
-            req.body.competition = new_competition._id
-            if(req.body.type==='league') {
-                league
-                    .newLeague(req.body)
-                    .then(new_league=>{
-                        new_competition.league = new_league
-                        let divisions = []
-                        for(let i=1; i<=req.body.divisions; i++){
-                            let division_details = {
-                                title : "Division "+ String.fromCharCode(64+i),
-                                rank: i,
-                                league: new_league._id
-                            }
-                            divisions.push(division.newDivision(division_details))
-                        }
-                        Promise.all(divisions).then(new_divisions=>{
-                            new_competition.league.divisions = new_divisions
-                            res.status(200).json(new_competition)
-                        })
-                        .catch(err=>res.status(500).json({error:true, message:"Error creating divisions"}))                       
-                    })
-                    .catch(err=>res.status(500).json({error:true, message:"Error creating league"}))
-            }else if(req.body.type==='cup'){
-
-            }else if(req.body.type==='championship'){
-
-            }else{
-                res.status(200).json(new_competition)
-            }
-            
+        .then(response=>{
+            res.status(200).json(response)
         })
         .catch(next)    
 }

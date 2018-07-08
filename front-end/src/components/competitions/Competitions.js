@@ -73,7 +73,7 @@ class Competitions extends React.Component {
             .then(res=>res.json())
             .then(res=>{
                 let competitions = [...this.state.competitions]
-                competitions.push(res)         
+                competitions.push(res.competition)         
                 this.setState({competitions, competition:(competitions.length-1), competition_title:res.title, isNewCompetition:true})                
             })
             .catch(err=>console.log(err))
@@ -140,7 +140,7 @@ class Competitions extends React.Component {
                 
                 <Grid container>
                     <Grid item>   
-                        { isNewCompetition && competitionType==='league' && <NewLeague competition={competitions[competition]._id} {...this.props}/> }
+                        { isNewCompetition && competitionType==='league' && <NewLeague competition={competitions[competition]} {...this.props}/> }
                         { !isNewCompetition && competitionType==='league' && <LeagueContainer competition={competitions[competition]._id} {...this.props}/> }
                         { !isNewCompetition && competitionType==='cup' && <CupContainer competition={competitions[competition]}  {...this.props}/> }
                     </Grid>

@@ -45,7 +45,7 @@ module.exports = {
                 })
                 .save()
                 .then(result=>result)
-                .catch(err=>console.log({error:true, message:"Error creating team"}))
+                .catch(err=>console.log({error:true, message:"Error creating division"}))
     ),
 
     createFixtureList: (division_id)=>{

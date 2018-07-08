@@ -34,8 +34,28 @@ module.exports = {
                     organisation,
                 })
                 .save()
-                .then(result=>result)
-                .catch(err=>console.log({error:true, message:"Error creating team"}))
+                .then(response=>{
+                    let newLeagueOrCup = {
+                        competition : response._id,
+                        title : response.title,
+                    }
+                    if(response.type==='league') {
+                        return league
+                            .newLeague(newLeagueOrCup)
+                            .then(new_league=>{
+                                response.league = new_league
+                                return({competition:response})                 
+                            })
+                            .catch(err=>console.error(err))
+                    }else if(req.body.type==='cup'){
+                
+                    }else if(req.body.type==='championship'){
+                
+                    }else{
+                        return(new_competition)
+                    }
+                })
+                .catch(err=>console.error(err))
     ),
 
 }
