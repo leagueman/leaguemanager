@@ -1,7 +1,7 @@
 
 import CreateDivisions from './CreateDivisions'
-import Step2 from './Step2'
-import Step3 from './Step3'
+import DivideTeams from './DivideTeams'
+import Confirmation from './Confirmation'
 
 export const steps = [
     {
@@ -12,17 +12,12 @@ export const steps = [
     {
         title:"Add Teams to Divisions",
         helperText: "Choose which teams belong in which division.",
-        component: Step2,
+        component: DivideTeams,
     },
     {
-        title:"Step 3",
-        helperText: "This is step 3",
-        component: Step3,
-    },
-    {
-        title:"Step 4",
-        helperText: "This is step 4",
-        component: Step3,
+        title:"Confirmation",
+        helperText: "Make sure you are happy with which division each team is playing in",
+        component: Confirmation,
     },
 ]
 

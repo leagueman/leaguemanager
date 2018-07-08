@@ -110,7 +110,7 @@ class Competitions extends React.Component {
         return (
             <div className={classes.root}>
                 <AppBar position="static" color="default">
-                    <Toolbar alignItems="flex-end">
+                    <Toolbar>
                         <Button onClick={this.handleOpenMenu} variant="fab" mini color="primary">
                             <ArrowDropDown/>
                         </Button>

@@ -49,6 +49,15 @@ class CreateDivisions extends React.Component {
         if(!found) divisions.push({name, value})
         this.setState({divisions})
         this.props.onChange('divisions', divisions) 
+
+
+        
+        let divisionsObject = {}
+        for(let d of this.state.divisions){
+            if(d.value) divisionsObject[d.value] = []
+        }
+
+        this.props.onChange('divisionsObject', divisionsObject) 
     }
 
     componentWillUnmount(){
@@ -63,6 +72,7 @@ class CreateDivisions extends React.Component {
         return (
             <div>
                 <Grid container spacing={16}>
+                    Its important to put the divisions in order as promotion and relegation will follow this order. Also note that adding a division will clear the teams from all divisions.
                     {newDivisions}
                 </Grid>
             </div>

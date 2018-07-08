@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import {Stepper,Step,StepLabel,Button,Typography, Paper} from '@material-ui/core';
+import {Stepper,Step,StepLabel,Button,Typography, Paper, LinearProgress} from '@material-ui/core';
 import Finished from './NewLeague/Finished'
 import steps from './NewLeague/steps'
+import { post } from '../../utilities/fetch';
 
 const styles = theme => ({
   root: {
@@ -25,12 +26,18 @@ class NewLeague extends Component {
 
     state = {
         activeStep: 0,
+        loader:false,
     };
 
     handleNext=()=>{
-        this.setState((prevState) => ({
-            activeStep: prevState.activeStep + 1
-        }));
+        if(this.state.activeStep === steps.length - 1){
+            console.log('post here')
+            this.onSaveLeague()
+        }else{
+            this.setState((prevState) => ({
+                activeStep: prevState.activeStep + 1
+            }));
+        }
     }
 
     handleBack=()=>{
@@ -45,6 +52,23 @@ class NewLeague extends Component {
 
     onChange=(name, value)=>{
         this.setState({[name]:value})
+    }
+
+    onSaveLeague=()=>{
+        this.setState({loader:true})
+
+        fetch('http://localhost:9000/api/league',post(this.state.divisionsObject))
+            .then(res=>res.json())
+            .then(res=>{
+                console.log(res)
+                this.setState((prevState) => ({
+                    activeStep: prevState.activeStep + 1,
+                    loader:false
+                }));
+            })
+            .catch(err=>console.log(err))
+
+        
     }
 
     render() {
@@ -67,7 +91,12 @@ class NewLeague extends Component {
                     <Stepper activeStep={activeStep} alternativeLabel>
                         {stepIcons}
                     </Stepper>
-                    <ActiveStepComponent onChange={this.onChange.bind(this)} divisions={this.state.divisions}/>
+                    {this.state.loader ? <LinearProgress /> : null }
+                    <ActiveStepComponent 
+                        onChange={this.onChange.bind(this)} 
+                        divisions={this.state.divisions}
+                        divisionsObject={this.state.divisionsObject}
+                    />
                 </Paper>
 
                 <div>
